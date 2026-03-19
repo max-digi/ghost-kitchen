@@ -37,7 +37,7 @@
     @keyframes heroFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
     /* ── Narration Toast ── */
-    .narration{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(26,26,24,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;padding:16px 28px 16px 20px;border-radius:14px;border:1px solid rgba(255,255,255,.06);box-shadow:0 12px 48px rgba(0,0,0,.5),0 0 0 1px rgba(166,29,61,.15),inset 0 1px 0 rgba(255,255,255,.05);opacity:0;transition:opacity .5s,transform .5s cubic-bezier(.16,1,.3,1);transform:translateX(-50%) translateY(12px);pointer-events:none;max-width:540px;text-align:left;line-height:1.6;display:flex;gap:16px;align-items:flex-start}
+    .narration{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(26,26,24,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;padding:16px 28px 16px 20px;border-radius:14px;border:1px solid rgba(255,255,255,.06);box-shadow:0 12px 48px rgba(0,0,0,.5),0 0 0 1px rgba(166,29,61,.15),inset 0 1px 0 rgba(255,255,255,.05);opacity:0;transition:opacity .5s,transform .5s cubic-bezier(.16,1,.3,1);transform:translateX(-50%) translateY(12px);pointer-events:none;max-width:540px;text-align:left;line-height:1.6;display:flex;gap:16px;align-items:flex-start}
     .narration.visible{opacity:1;transform:translateX(-50%) translateY(0)}
     .narration::before{content:'';flex-shrink:0;width:3px;border-radius:3px;align-self:stretch;background:linear-gradient(180deg,var(--red),rgba(166,29,61,.2));animation:narrationPulse 2s ease-in-out infinite}
     @keyframes narrationPulse{0%,100%{opacity:1}50%{opacity:.5}}
@@ -83,11 +83,11 @@
     @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
     /* Views */
-    .view{display:none;min-height:calc(100vh - 90px)}
+    .view{display:none;height:calc(100vh - 90px)}
     .view.active{display:flex;flex-direction:column}
 
     /* ═══ OPERATOR VIEW ═══ */
-    .op-layout{flex:1;display:grid;grid-template-columns:300px 1fr 340px;min-height:0}
+    .op-layout{flex:1;display:grid;grid-template-columns:280px 1fr 300px;min-height:0;overflow:hidden}
     .op-col{border-right:1px solid var(--ink-border);display:flex;flex-direction:column;overflow:hidden}
     .op-col:last-child{border-right:none}
     .col-hdr{padding:16px 22px;border-bottom:1px solid var(--ink-border);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
@@ -146,9 +146,9 @@
     .tx-hash a:hover{color:var(--ink)}
 
     /* Stats bar */
-    .stats-bar{position:sticky;bottom:0;z-index:50;border-top:1px solid rgba(255,255,255,.08);padding:14px 28px;display:flex;align-items:center;gap:36px;background:var(--ink);color:var(--cream)}
-    .stat-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.15em;margin-bottom:2px}
-    .stat-val{font-family:'Instrument Serif',serif;font-size:22px;color:var(--cream)}
+    .stats-bar{flex-shrink:0;z-index:50;border-top:1px solid rgba(255,255,255,.08);padding:10px 24px;display:flex;align-items:center;gap:28px;background:var(--ink);color:var(--cream)}
+    .stat-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.15em;margin-bottom:1px}
+    .stat-val{font-family:'Instrument Serif',serif;font-size:18px;color:var(--cream)}
 
     /* Right col sections */
     .r-section{padding:12px 14px}
@@ -180,6 +180,48 @@
     /* Flow empty */
     .flow-empty{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
     .flow-empty-text{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.15em}
+
+    /* Agent X post card */
+    .agent-post-card{margin-top:14px;border:1.5px solid var(--ink-border2);border-radius:10px;overflow:hidden;animation:slideIn .4s ease}
+    .agent-post-steps{padding:14px 16px;background:var(--cream2);display:flex;flex-direction:column;gap:6px}
+    .agent-post-step{display:flex;align-items:center;gap:8px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted)}
+    .agent-post-step .step-icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;border:1px solid var(--ink-border2);background:var(--cream)}
+    .agent-post-step.done .step-icon{background:var(--green);border-color:var(--green);color:#fff}
+    .agent-post-step.running .step-icon{background:var(--blue);border-color:var(--blue);color:#fff;animation:pulse 1s infinite}
+    .agent-post-step .step-cost{margin-left:auto;color:var(--red)}
+    .agent-post-tweet{padding:14px 16px;background:var(--ink)}
+    .agent-post-tweet .tweet-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .agent-post-tweet .tweet-avatar{width:32px;height:32px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:13px;color:var(--ink);flex-shrink:0}
+    .agent-post-tweet .tweet-name{font-size:11px;font-weight:700;color:var(--cream)}
+    .agent-post-tweet .tweet-handle{font-size:10px;color:var(--muted)}
+    .agent-post-tweet .tweet-body{font-size:11px;color:var(--cream);line-height:1.5;margin-bottom:8px}
+    .agent-post-tweet .tweet-img{height:48px;border-radius:6px;background:linear-gradient(135deg,#3a2a1a 0%,#2a1510 40%,#1a1a18 100%);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.06);overflow:hidden;position:relative}
+    .agent-post-tweet .tweet-img-label{font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+    .agent-post-tweet .tweet-actions{display:flex;gap:20px;margin-top:8px}
+    .agent-post-tweet .tweet-actions span{font-size:9px;color:var(--muted)}
+    @keyframes imgReveal{from{width:0}to{width:100%}}
+    .img-gen-bar{position:absolute;left:0;top:0;height:100%;background:rgba(59,130,246,.12);border-right:2px solid var(--blue);animation:imgReveal 1.5s ease forwards}
+
+    /* ── Responsive ── */
+    @media(max-width:1200px){
+      .op-layout{grid-template-columns:240px 1fr 260px}
+      .stats-bar{gap:20px;padding:8px 18px;flex-wrap:wrap}
+      .stat-val{font-size:16px}
+      .mi-desc{max-width:140px}
+    }
+    @media(max-width:960px){
+      .op-layout{grid-template-columns:1fr 1fr}
+      .op-col:first-child{display:none}
+      .stats-bar{gap:16px}
+    }
+    @media(max-width:700px){
+      .op-layout{grid-template-columns:1fr}
+      .op-col{border-right:none!important}
+      .op-col:nth-child(3){display:none}
+      .stats-bar{gap:12px;padding:8px 14px}
+      .stat-val{font-size:14px}
+      .narration{max-width:90vw;font-size:12px;bottom:70px}
+    }
   </style>
 </head>
 <body>
@@ -646,38 +688,62 @@ async function runEodReorder() {
   const topSeller = Object.entries(usage).sort((a,b) => b[1].count - a[1].count)[0];
   const specialName = topSeller ? topSeller[0] : MENU[0].name;
   const soldCount = topSeller ? topSeller[1].count : 0;
-  addTx(`🎨 Agent: Generating image of "${specialName}" via Stability AI (MPP $0.035)…`);
-  await wait(1800);
-  AGENTS.kitchen.balance -= 0.035;
-  renderWallets();
-  addTx(`📱 Posted to @PBC_Brooklyn on X — "${specialName}" daily special`);
-  document.getElementById('rc-d3').className = 'reorder-dot done';
 
-  // Show the tweet preview card
+  // Show the agent post card with explicit steps
   const cascade = document.getElementById('rc-cascade');
   cascade.insertAdjacentHTML('afterend', `
-    <div style="margin-top:14px;padding:14px 16px;background:var(--ink);border:1px solid rgba(255,255,255,.1);border-radius:12px;animation:slideIn .4s ease">
-      <div style="display:flex;gap:10px;align-items:flex-start">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:14px;color:var(--ink);flex-shrink:0">P</div>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
-            <span style="font-size:12px;font-weight:700;color:var(--cream)">PBC Sandwich</span>
-            <span style="font-size:11px;color:var(--muted)">@PBC_Brooklyn · now</span>
-          </div>
-          <div style="font-size:12px;color:var(--cream);line-height:1.5;margin-bottom:10px">Today's best seller: ${specialName} 🔥 ${soldCount} sold before lunch. Back tomorrow — come early. #ParkSlope #BrooklynEats</div>
-          <div style="height:56px;border-radius:8px;background:linear-gradient(135deg,#3a2a1a 0%,#2a1510 40%,#1a1a18 100%);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.06)">
-            <span style="font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase">🖼️ AI-generated · Stability AI via MPP</span>
-          </div>
-          <div style="display:flex;gap:24px;margin-top:10px">
-            <span style="font-size:10px;color:var(--muted)">💬 —</span>
-            <span style="font-size:10px;color:var(--muted)">🔁 —</span>
-            <span style="font-size:10px;color:var(--muted)">❤️ —</span>
-            <span style="font-size:10px;color:var(--muted)">📊 —</span>
-          </div>
+    <div class="agent-post-card" id="agent-post-card">
+      <div class="agent-post-steps">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px">Agent → X Post Pipeline</div>
+        <div class="agent-post-step running" id="ap-s1"><span class="step-icon">1</span>Selecting best seller: "${specialName}" (${soldCount} sold)<span class="step-cost"></span></div>
+        <div class="agent-post-step" id="ap-s2"><span class="step-icon">2</span>Generating hero image via Stability AI<span class="step-cost">$0.035</span></div>
+        <div class="agent-post-step" id="ap-s3"><span class="step-icon">3</span>Composing tweet copy<span class="step-cost"></span></div>
+        <div class="agent-post-step" id="ap-s4"><span class="step-icon">4</span>Publishing to @PBC_Brooklyn on X<span class="step-cost"></span></div>
+      </div>
+      <div class="agent-post-tweet" id="ap-tweet" style="display:none">
+        <div class="tweet-hdr">
+          <div class="tweet-avatar">P</div>
+          <div><div class="tweet-name">PBC Sandwich</div><div class="tweet-handle">@PBC_Brooklyn · just now</div></div>
         </div>
+        <div class="tweet-body">Today's best seller: ${specialName} 🔥 ${soldCount} sold before lunch. Back tomorrow — come early. #ParkSlope #BrooklynEats</div>
+        <div class="tweet-img" id="ap-img"><div class="img-gen-bar" id="ap-img-bar" style="display:none"></div><span class="tweet-img-label" id="ap-img-label">awaiting generation…</span></div>
+        <div class="tweet-actions"><span>💬 —</span><span>🔁 —</span><span>❤️ —</span><span>📊 —</span></div>
       </div>
     </div>
   `);
+
+  addTx(`🎨 Agent: Selecting "${specialName}" as today's hero — ${soldCount} sold`);
+  await wait(800);
+  // Step 1 done
+  document.getElementById('ap-s1').className = 'agent-post-step done';
+  document.getElementById('ap-s2').className = 'agent-post-step running';
+  addTx(`🎨 Agent: Requesting image generation from Stability AI via MPP ($0.035)…`);
+
+  // Show tweet preview area with image generating
+  document.getElementById('ap-tweet').style.display = 'block';
+  document.getElementById('ap-img-bar').style.display = 'block';
+  document.getElementById('ap-img-label').textContent = 'generating…';
+  await wait(1800);
+
+  // Step 2 done — image generated
+  AGENTS.kitchen.balance -= 0.035;
+  renderWallets();
+  document.getElementById('ap-s2').className = 'agent-post-step done';
+  document.getElementById('ap-s3').className = 'agent-post-step running';
+  document.getElementById('ap-img-bar').style.display = 'none';
+  document.getElementById('ap-img-label').textContent = '🖼️ AI-generated · Stability AI via MPP';
+  addTx(`🖼️ Image generated for "${specialName}" — Stability AI (MPP $0.035)`);
+  await wait(600);
+
+  // Step 3 done — copy composed
+  document.getElementById('ap-s3').className = 'agent-post-step done';
+  document.getElementById('ap-s4').className = 'agent-post-step running';
+  await wait(600);
+
+  // Step 4 done — published
+  document.getElementById('ap-s4').className = 'agent-post-step done';
+  document.getElementById('rc-d3').className = 'reorder-dot done';
+  addTx(`📱 Posted to @PBC_Brooklyn on X — "${specialName}" daily special`);
 
   // Restock items (with weather adjustments)
   MENU.forEach(item => {
