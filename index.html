@@ -17,7 +17,7 @@
     /* ── Hero Overlay ── */
     .hero-overlay{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s ease,visibility .8s ease}
     .hero-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
-    .hero-content{text-align:center;max-width:600px;padding:40px}
+    .hero-content{text-align:center;max-width:640px;padding:40px}
     .hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:20px;opacity:0;animation:heroFade .8s ease .2s forwards}
     .hero-title{font-family:'Instrument Serif',serif;font-size:48px;color:var(--cream);line-height:1.15;margin-bottom:16px;opacity:0;animation:heroFade .8s ease .5s forwards}
     .hero-sub{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:12px;opacity:0;animation:heroFade .8s ease .8s forwards}
@@ -33,14 +33,6 @@
     .mode-badge.live{color:var(--green);border-color:var(--green);animation:pulse 2s infinite}
     .mode-badge.sim{color:var(--amber);border-color:var(--amber)}
 
-    /* ── Hop Counter ── */
-    .hop-counter{display:inline-flex;align-items:center;gap:3px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);margin-left:8px}
-    .hop-counter .hop-n{font-weight:700;font-size:12px}
-
-    /* ── Cascade card type badge ── */
-    .oc-type{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid}
-    .oc-type.delivery{color:var(--blue);border-color:var(--blue)}
-    .oc-type.pickup{color:var(--green);border-color:var(--green)}
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden;font-size:14px}
     ::-webkit-scrollbar{width:5px}
@@ -78,67 +70,6 @@
     .view{display:none;min-height:calc(100vh - 90px)}
     .view.active{display:flex;flex-direction:column}
 
-    /* ═══ CUSTOMER VIEW ═══ */
-    .cust-layout{flex:1;display:grid;grid-template-columns:1fr 380px;min-height:0}
-    .chat-col{display:flex;flex-direction:column;border-right:1px solid var(--ink-border)}
-    .chat-header{padding:16px 24px;border-bottom:1px solid var(--ink-border);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
-    .chat-body{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:12px}
-    .msg{max-width:78%;padding:14px 18px;font-size:13px;line-height:1.6;animation:slideIn .3s ease;border-radius:10px}
-    .msg.bot{background:var(--cream2);border:1px solid var(--ink-border);align-self:flex-start;border-radius:2px 10px 10px 10px}
-    .msg.user{background:var(--ink);color:var(--cream);align-self:flex-end;border-radius:10px 2px 10px 10px}
-    .msg .sender{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-    .msg.user .sender{color:var(--muted2)}
-    .chat-input-row{padding:14px 24px;border-top:1px solid var(--ink-border);display:flex;gap:10px}
-    .chat-input{flex:1;background:var(--cream2);border:1px solid var(--ink-border);color:var(--ink);padding:12px 16px;font-family:inherit;font-size:13px;outline:none;border-radius:6px}
-    .chat-input:focus{border-color:var(--ink-border2)}
-    .chat-input::placeholder{color:var(--muted)}
-    .chat-send{background:var(--ink);color:var(--cream);border:none;padding:12px 22px;font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s}
-    .chat-send:hover{background:transparent;color:var(--ink);outline:1.5px solid var(--ink)}
-
-    /* Order sidebar */
-    .order-sidebar{display:flex;flex-direction:column;padding:24px}
-    .os-section{margin-bottom:28px}
-    .os-label{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-    .os-card{background:var(--cream2);border:1px solid var(--ink-border);padding:20px;border-radius:10px}
-    .os-empty{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.1em;text-align:center;padding:40px 0}
-    .os-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1.5px solid;border-radius:4px}
-    .os-status.received{color:var(--blue);border-color:var(--blue)}
-    .os-status.prepping{color:var(--amber);border-color:var(--amber)}
-    .os-status.ready{color:var(--green);border-color:var(--green)}
-    .os-status.called{color:var(--red);border-color:var(--red)}
-    .os-item{font-family:'Instrument Serif',serif;font-size:20px;margin:10px 0 4px}
-    .os-detail{font-size:11px;color:var(--muted)}
-    .os-price{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--red);font-size:13px;margin-top:6px}
-
-    /* Delivery tracker */
-    .del-tracker{background:var(--cream2);border:1px solid var(--ink-border);border-radius:10px;padding:18px;margin-top:10px;animation:slideIn .3s ease}
-    .del-tracker.hidden{display:none}
-    .del-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-    .del-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-    .del-eta{font-family:'Instrument Serif',serif;font-size:18px}
-    .del-dasher{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--ink-border);border-bottom:1px solid var(--ink-border);margin:8px 0}
-    .del-dasher-avatar{width:32px;height:32px;background:var(--ink);color:var(--cream);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-    .del-dasher-info{flex:1}
-    .del-dasher-name{font-weight:700;font-size:12px}
-    .del-dasher-meta{font-size:10px;color:var(--muted)}
-    .del-progress{display:flex;gap:3px;margin:10px 0 6px}
-    .del-step{flex:1;height:3px;background:var(--cream3);border-radius:2px;transition:background .5s}
-    .del-step.active{background:var(--green)}
-    .del-step.current{background:var(--blue);animation:pulse 1.5s infinite}
-    .del-status{font-size:10px;color:var(--muted)}
-    .del-card-info{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--ink-border)}
-    .del-card-num{letter-spacing:.05em}
-    .del-bridge{display:flex;align-items:center;gap:4px;margin-top:4px;font-size:9px;color:var(--muted)}
-    .del-bridge-arrow{color:var(--red)}
-
-    /* Phone ring */
-    .phone-ring{display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:28px;background:var(--cream2);border:2px solid var(--red);border-radius:10px;margin-top:10px;animation:ringPulse 1s infinite}
-    .phone-ring.active{display:flex}
-    @keyframes ringPulse{0%,100%{border-color:var(--red)}50%{border-color:transparent}}
-    .phone-icon{font-size:32px}
-    .phone-text{font-size:11px;color:var(--red);text-transform:uppercase;letter-spacing:.15em;font-weight:700}
-    .phone-msg{font-size:12px;color:var(--ink-light);text-align:center;line-height:1.6}
-
     /* ═══ COOK VIEW ═══ */
     .cook-layout{flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
     .cook-col{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--ink-border)}
@@ -152,7 +83,6 @@
     .ticket-time{font-size:10px;color:var(--muted)}
     .ticket-name{font-family:'Instrument Serif',serif;font-size:18px;margin-bottom:4px}
     .ticket-detail{font-size:11px;color:var(--muted)}
-    .ticket-phone{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px}
     .ticket-btn{width:100%;margin-top:14px;padding:11px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s}
     .ticket-btn.start{color:var(--amber);border:1.5px solid var(--amber);background:transparent}
     .ticket-btn.start:hover{background:var(--amber);color:var(--ink)}
@@ -160,45 +90,44 @@
     .ticket-btn.finish:hover{background:var(--green);color:var(--ink)}
 
     /* ═══ OPERATOR VIEW ═══ */
-    .op-layout{flex:1;display:grid;grid-template-columns:320px 1fr 360px;min-height:0}
+    .op-layout{flex:1;display:grid;grid-template-columns:300px 1fr 340px;min-height:0}
     .op-col{border-right:1px solid var(--ink-border);display:flex;flex-direction:column;overflow:hidden}
     .op-col:last-child{border-right:none}
     .col-hdr{padding:16px 22px;border-bottom:1px solid var(--ink-border);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
     .col-body{flex:1;overflow-y:auto;padding:14px}
 
     /* Menu items */
-    .mi{padding:16px 18px;border:1px solid var(--ink-border);margin-bottom:6px;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;transition:all .2s;background:var(--cream);border-radius:8px}
+    .mi{padding:14px 16px;border:1px solid var(--ink-border);margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .2s;background:var(--cream);border-radius:8px}
     .mi:hover{border-color:var(--ink-border2);background:var(--cream2);transform:translateY(-1px)}
     .mi.disabled{opacity:.25;pointer-events:none}
-    .mi-name{font-weight:700;font-size:12px;margin-bottom:3px}
-    .mi-desc{font-size:10px;color:var(--muted);line-height:1.4;margin-bottom:4px;max-width:200px}
+    .mi-name{font-weight:700;font-size:12px;margin-bottom:2px}
+    .mi-desc{font-size:10px;color:var(--muted);line-height:1.3;max-width:180px}
     .mi-price{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:13px;color:var(--red)}
-    .mi-stock{font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-top:3px}
+    .mi-stock{font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
     .stock-ok{color:var(--green)}.stock-low{color:var(--amber)}.stock-out{color:var(--red)}
-    .mi-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
-    .mi-tag{font-size:8px;color:var(--muted);border:1px solid var(--ink-border2);padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.05em}
 
-    /* Order cascade */
-    .order-card{background:var(--cream);border:1px solid var(--ink-border);padding:18px;margin-bottom:8px;border-radius:10px;animation:slideIn .3s ease}
+    /* Order card (tracking, not payment cascade) */
+    .order-card{background:var(--cream);border:1px solid var(--ink-border);padding:16px;margin-bottom:6px;border-radius:10px;animation:slideIn .3s ease}
     @keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-    .oc-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .oc-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
     .oc-id{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
     .oc-item{font-family:'Instrument Serif',serif;font-size:16px}
-    .oc-cust{font-size:11px;color:var(--muted);margin-bottom:12px}
-    .cascade{position:relative;padding-left:16px}
-    .cascade::before{content:'';position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:var(--ink-border2)}
-    .ps{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:11px;position:relative}
-    .pd{width:8px;height:8px;border-radius:50%;flex-shrink:0;position:absolute;left:-16px;transition:all .3s}
-    .pd.pending{border:1.5px solid var(--muted2);background:var(--cream)}
-    .pd.running{border:1.5px solid var(--blue);background:var(--blue);box-shadow:0 0 8px rgba(59,130,246,.4);animation:pulse 1s infinite}
-    .pd.done{border:1.5px solid var(--green);background:var(--green)}
-    .pf{color:var(--ink);font-weight:500}
-    .pa{color:var(--muted)}
-    .pt{color:var(--ink);font-weight:500}
-    .pamt{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:11px;margin-left:auto}
-    .pamt.credit{color:var(--green)}.pamt.debit{color:var(--red)}
-    .flow-empty{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
-    .flow-empty-text{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.15em}
+    .oc-cust{font-size:11px;color:var(--muted);margin-bottom:8px}
+    .oc-usage{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-light);display:flex;gap:12px;flex-wrap:wrap}
+    .oc-usage-item{display:flex;align-items:center;gap:4px}
+    .oc-usage-dot{width:5px;height:5px;border-radius:50%}
+    .oc-status-badge{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid}
+
+    /* Usage tracker */
+    .usage-card{background:var(--cream2);border:1px solid var(--ink-border);padding:16px;border-radius:10px;margin-bottom:10px}
+    .usage-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+    .usage-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid var(--ink-border)}
+    .usage-row:last-child{border-bottom:none}
+    .usage-supplier{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:10px;margin-bottom:4px}
+    .usage-qty{font-family:'JetBrains Mono',monospace;font-size:11px}
+    .usage-cost{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red)}
+    .usage-total{display:flex;justify-content:space-between;align-items:center;padding:8px 0;margin-top:8px;border-top:2px solid var(--ink-border2);font-weight:700;font-size:13px}
+    .usage-total .usage-cost{font-size:14px;font-family:'Instrument Serif',serif}
 
     /* Wallets */
     .w{border:1px solid var(--ink-border);padding:14px 16px;margin-bottom:6px;transition:all .5s;background:var(--cream);border-radius:8px}
@@ -228,17 +157,6 @@
     .r-section{padding:12px 14px}
     .r-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 
-    /* Code inline */
-    code{font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(26,26,24,.05);padding:2px 5px;border-radius:3px}
-
-    /* Verified badge */
-    .verified-badge{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);border:1px solid var(--green);padding:3px 8px;border-radius:4px;margin-top:8px;animation:slideIn .3s ease}
-    .verified-badge .v-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
-    .verified-link{color:var(--green);text-decoration:none;transition:color .2s}
-    .verified-link:hover{color:var(--cream)}
-    .cascade-proof{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:6px;padding:6px 8px;background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.15);border-radius:4px;animation:slideIn .3s ease}
-    .cascade-proof a{color:var(--green);text-decoration:none}
-
     /* EOD reorder */
     .eod-btn{background:var(--cream);color:var(--ink);border:none;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:5px;transition:all .25s;animation:slideIn .3s ease}
     .eod-btn:hover{background:var(--red);color:var(--cream)}
@@ -257,6 +175,14 @@
     .reorder-step{font-size:11px;padding:3px 0;display:flex;align-items:center}
     .reorder-step .pamt{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red)}
     .reorder-summary{margin-top:12px;padding:10px 12px;background:var(--cream);border:1px solid var(--ink-border);border-radius:6px;font-size:10px;color:var(--muted);line-height:1.6;font-family:'JetBrains Mono',monospace}
+
+    /* Cascade proof */
+    .cascade-proof{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:6px;padding:6px 8px;background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.15);border-radius:4px;animation:slideIn .3s ease}
+    .cascade-proof a{color:var(--green);text-decoration:none}
+
+    /* Flow empty */
+    .flow-empty{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+    .flow-empty-text{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.15em}
   </style>
 </head>
 <body>
@@ -264,10 +190,10 @@
   <div class="hero-overlay" id="hero-overlay">
     <div class="hero-content">
       <div class="hero-eyebrow">Tempo MPP Demo</div>
-      <div class="hero-title">What if agents could pay<br>other agents?</div>
-      <div class="hero-sub">One sandwich order. Seven autonomous payments across six independent services.<br>No human approves anything. The agent runs the business.</div>
+      <div class="hero-title">Your agent runs<br>the kitchen.</div>
+      <div class="hero-sub">Orders come in all day. Your agent tracks every ingredient used.<br>At close, it auto-reorders from suppliers and pays via MPP — no spreadsheets, no invoices.</div>
       <div class="hero-cascade">
-        Customer <span class="ha">→</span> Kitchen <span class="ha">→</span> Fleisher's <span class="ha">→</span> Runner &amp; Stone <span class="ha">→</span> Laso Finance <span class="ha">→</span> DoorDash <span class="ha">→</span> StablePhone
+        Orders <span class="ha">→</span> Track Usage <span class="ha">→</span> EOD Recap <span class="ha">→</span> Auto-Reorder <span class="ha">→</span> Pay Fleisher's + Runner &amp; Stone via MPP
       </div>
       <button class="hero-enter" onclick="dismissHero()">Enter the Kitchen</button>
       <div class="hero-tempo">Powered by Tempo · USDC · Micropayment Protocol</div>
@@ -278,79 +204,36 @@
     <div class="logo">
       <div class="logo-mark">GK</div>
       <span class="logo-text">Ghost Kitchen</span>
-      <span class="logo-sub">Agents Paying Agents</span>
+      <span class="logo-sub">Merchant Dashboard</span>
     </div>
     <div class="tabs">
-      <div class="tab active" onclick="switchTab('customer')"><span class="tab-icon">🛒</span> Customer</div>
+      <div class="tab active" onclick="switchTab('operator')"><span class="tab-icon">◉</span> Dashboard</div>
       <div class="tab" onclick="switchTab('cook')"><span class="tab-icon">🔪</span> Kitchen</div>
-      <div class="tab" onclick="switchTab('operator')"><span class="tab-icon">◉</span> Operator</div>
     </div>
     <div class="header-right">
       <span id="mode-badge" class="mode-badge sim">Simulated</span>
       <span class="hdr-badge"><span class="live-dot"></span>Brooklyn, NY</span>
-      <span class="hdr-badge" id="hdr-hops">0 hops</span>
     </div>
   </header>
 
   <!-- Ticker -->
   <div class="ticker">
     <div class="ticker-inner">
-      <span class="ticker-text">Agents Paying Agents — No Human In The Loop</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">7 Autonomous Payments Per Order</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Customer → Kitchen → Fleisher's → Runner & Stone → Laso → DoorDash → StablePhone</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">USDC on Tempo via MPP</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Crypto → Virtual Visa → Legacy Rails</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">AI Phone Calls via StablePhone</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Agent Tracks Every Ingredient — Auto-Reorders at Close</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">No Spreadsheets · No Invoices · No Human Approvals</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">EOD: Kitchen → Fleisher's + Runner & Stone via MPP</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">USDC on Tempo · Micropayment Protocol</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Fleisher's · Craft Butchery · Park Slope</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Runner & Stone · Artisan Bakery · Gowanus</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">The Cook Just Makes The Sandwich</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Fleisher's · Park Slope</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Runner & Stone · Gowanus</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">EOD Auto-Reorder — Agent Restocks Overnight</span><span class="ticker-dot">◆</span>
       <!-- Duplicate for seamless loop -->
-      <span class="ticker-text">Agents Paying Agents — No Human In The Loop</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">7 Autonomous Payments Per Order</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Customer → Kitchen → Fleisher's → Runner & Stone → Laso → DoorDash → StablePhone</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">USDC on Tempo via MPP</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Crypto → Virtual Visa → Legacy Rails</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">AI Phone Calls via StablePhone</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Agent Tracks Every Ingredient — Auto-Reorders at Close</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">No Spreadsheets · No Invoices · No Human Approvals</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">EOD: Kitchen → Fleisher's + Runner & Stone via MPP</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">USDC on Tempo · Micropayment Protocol</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Fleisher's · Craft Butchery · Park Slope</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Runner & Stone · Artisan Bakery · Gowanus</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">The Cook Just Makes The Sandwich</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Fleisher's · Park Slope</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Runner & Stone · Gowanus</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">EOD Auto-Reorder — Agent Restocks Overnight</span><span class="ticker-dot">◆</span>
-    </div>
-  </div>
-
-  <!-- ═══ CUSTOMER VIEW ═══ -->
-  <div class="view active" id="view-customer">
-    <div class="cust-layout">
-      <div class="chat-col">
-        <div class="chat-header">Chat with your agent</div>
-        <div class="chat-body" id="chat-body"></div>
-        <div class="chat-input-row">
-          <input class="chat-input" id="chat-input" placeholder="Tell your agent what you want…" onkeydown="if(event.key==='Enter')sendChat()">
-          <button class="chat-send" onclick="sendChat()">Send</button>
-        </div>
-      </div>
-      <div class="order-sidebar">
-        <div class="os-section">
-          <div class="os-label">Your Order</div>
-          <div id="cust-order"><div class="os-empty">No order yet</div></div>
-        </div>
-        <div class="os-section">
-          <div class="os-label">Delivery</div>
-          <div id="cust-delivery"><div class="os-empty">No delivery yet</div></div>
-        </div>
-        <div class="os-section">
-          <div class="os-label">Notification</div>
-          <div id="phone-ring-area">
-            <div class="os-empty" id="phone-waiting">Waiting for your sandwich…</div>
-            <div class="phone-ring" id="phone-ring">
-              <div class="phone-icon">📞</div>
-              <div class="phone-text">Incoming Call — StablePhone</div>
-              <div class="phone-msg" id="phone-ring-msg"></div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -366,38 +249,40 @@
         <div class="cook-col-body" id="cook-prepping"></div>
       </div>
       <div class="cook-col">
-        <div class="cook-col-hdr" style="color:var(--green)"><span>✓ Ready</span><span class="count" id="cook-ready-n">0</span></div>
+        <div class="cook-col-hdr" style="color:var(--green)"><span>✓ Done</span><span class="count" id="cook-ready-n">0</span></div>
         <div class="cook-col-body" id="cook-ready"></div>
       </div>
     </div>
   </div>
 
   <!-- ═══ OPERATOR VIEW ═══ -->
-  <div class="view" id="view-operator">
+  <div class="view active" id="view-operator">
     <div class="op-layout">
       <div class="op-col">
         <div class="col-hdr"><span>Menu & Inventory</span><span id="menu-count"></span></div>
         <div class="col-body" id="op-menu"></div>
       </div>
       <div class="op-col">
-        <div class="col-hdr"><span>Payment Cascade</span><span id="order-count">0 today</span></div>
-        <div class="col-body" id="op-orders"><div class="flow-empty"><div class="flow-empty-text">Waiting for orders…</div></div></div>
+        <div class="col-hdr"><span>Today's Orders</span><span id="order-count">0 today</span></div>
+        <div class="col-body" id="op-orders">
+          <div id="usage-tracker"></div>
+          <div class="flow-empty" id="orders-empty"><div class="flow-empty-text">Click a menu item to simulate an order</div></div>
+        </div>
       </div>
       <div class="op-col" style="border-right:none">
         <div class="col-hdr">Agent Wallets</div>
         <div class="r-section" id="op-wallets"></div>
         <div style="border-top:1px solid var(--ink-border)"></div>
-        <div class="col-hdr">Transaction Log</div>
+        <div class="col-hdr">Activity Log</div>
         <div class="r-section" style="flex:1;overflow-y:auto" id="op-txlog"></div>
       </div>
     </div>
     <div class="stats-bar">
       <div><div class="stat-label">Orders</div><div class="stat-val" id="s-orders">0</div></div>
-      <div><div class="stat-label">Total Hops</div><div class="stat-val" id="s-hops" style="color:var(--blue)">0</div></div>
       <div><div class="stat-label">Revenue</div><div class="stat-val" id="s-rev">$0</div></div>
-      <div><div class="stat-label">Suppliers</div><div class="stat-val" id="s-cogs">$0</div></div>
-      <div><div class="stat-label">Delivery</div><div class="stat-val" id="s-del">$0</div></div>
-      <div><div class="stat-label">Comms</div><div class="stat-val" id="s-comms">$0</div></div>
+      <div><div class="stat-label">Meat Used</div><div class="stat-val" id="s-meat" style="color:var(--amber)">$0</div></div>
+      <div><div class="stat-label">Bread Used</div><div class="stat-val" id="s-bread" style="color:var(--amber)">$0</div></div>
+      <div><div class="stat-label">Reorder Est.</div><div class="stat-val" id="s-reorder" style="color:var(--red)">$0</div></div>
       <div><div class="stat-label">Net Margin</div><div class="stat-val" id="s-margin" style="color:var(--green)">$0</div></div>
       <div style="flex:1"></div>
       <div id="eod-btn-wrap"></div>
@@ -407,90 +292,38 @@
 <script>
 // ═══ SHARED STATE ═══
 const AGENTS = {
-  kitchen: {name:'PBC Kitchen',role:'Operator',addr:'0x878d…ebf3',balance:85},
-  meat:    {name:'Fleisher\'s',role:'Craft Butchery · Park Slope',addr:'0xa31f…c902',balance:240},
-  bread:   {name:'Runner & Stone',role:'Artisan Bakery · Gowanus',addr:'0x5e2b…d817',balance:65},
-  laso:    {name:'Laso Finance',role:'Virtual Debit Cards',addr:'0x8c4e…a1d7',balance:50},
-  doordash:{name:'DoorDash Drive',role:'Dasher Logistics',addr:'0xdd41…3b08',balance:180},
-  phone:   {name:'StablePhone',role:'AI Phone Calls',addr:'0x71ae…b304',balance:18},
+  kitchen: {name:'PBC Kitchen',role:'Operator',addr:'0x878d…ebf3',balance:500},
+  meat:    {name:"Fleisher's",role:'Craft Butchery · Park Slope',addr:'0xa31f…c902',balance:0},
+  bread:   {name:'Runner & Stone',role:'Artisan Bakery · Gowanus',addr:'0x5e2b…d817',balance:0},
 };
 
 // ═══ BACKEND CONNECTION ═══
-const API = location.port === '3000' ? '' : null; // null = standalone mode, '' = connected mode
+const API = location.port === '3000' ? '' : null;
 let sse = null;
 
 function connectSSE() {
   if (!API && API !== '') return;
   sse = new EventSource('/api/events');
-  sse.addEventListener('order', (e) => {
-    const data = JSON.parse(e.data);
-    console.log('[SSE] order:', data);
-  });
-  sse.addEventListener('order_update', (e) => {
-    const data = JSON.parse(e.data);
-    console.log('[SSE] update:', data);
-    const order = orders.find(o => o.serverId === data.id);
-    if (!order) return;
-
-    // Real StablePhone call completed — show verified badge
-    if (data.status === 'called' && data.call && data.call.id) {
-      const cascadeEl = document.getElementById(`o-${order.id}`);
-      if (cascadeEl && !cascadeEl.querySelector('.cascade-proof')) {
-        cascadeEl.querySelector('.cascade')?.insertAdjacentHTML('afterend', `
-          <div class="cascade-proof">
-            <span class="v-dot" style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;margin-right:4px"></span>
-            StablePhone call verified · <a href="https://stablephone.dev/call/${data.call.id}" target="_blank">${data.call.id}</a>
-            · paid $0.54 USDC via MPP on Tempo
-          </div>
-        `);
-      }
-      addTx(`${order.id} · ✓ REAL StablePhone call verified: ${data.call.id} — $0.54 USDC via MPP`, null);
-    }
-
-    // Delivery status updates from backend
-    if (data.delivery && order.delivery) {
-      const newStatus = data.delivery.status || data.status;
-      if (newStatus && order.delivery.status !== newStatus) {
-        order.delivery.status = newStatus;
-        order.delivery.statusIdx = order.delivery.statuses.indexOf(newStatus);
-        if (order.delivery.statusIdx < 0) order.delivery.statusIdx = order.delivery.statuses.length - 1;
-        renderDeliveryTracker(order.id, order);
-        updateCustDelivery();
-      }
-    }
-  });
-  sse.addEventListener('delivery_update', (e) => {
-    const data = JSON.parse(e.data);
-    console.log('[SSE] delivery:', data);
-    const order = orders.find(o => o.serverId === data.id);
-    if (!order || !order.delivery) return;
-
-    if (data.status && order.delivery.status !== data.status) {
-      order.delivery.status = data.status;
-      order.delivery.statusIdx = order.delivery.statuses.indexOf(data.status);
-      if (order.delivery.statusIdx < 0) order.delivery.statusIdx = order.delivery.statuses.length - 1;
-      renderDeliveryTracker(order.id, order);
-      updateCustDelivery();
-      renderCookView();
-      addTx(`${order.id} · 🚗 Backend delivery: ${STATUS_LABELS[data.status] || data.status}`);
-    }
-  });
+  sse.addEventListener('order', (e) => { console.log('[SSE] order:', JSON.parse(e.data)); });
+  sse.addEventListener('order_update', (e) => { console.log('[SSE] update:', JSON.parse(e.data)); });
   sse.onerror = () => console.warn('[SSE] connection lost, reconnecting...');
 }
 
 const MENU = [
-  {id:'turkey-bacon-jam',name:'Turkey & Bacon Jam',price:15,meatCost:5.50,breadCost:1.20,lasoCost:0.01,dashCost:4.50,callCost:0.54,stock:8,ingredients:['turkey','bacon','american cheese','ciabatta'],description:'Smoked turkey breast, bacon jam, white American cheese, Duke\'s mayo, Crystal hot sauce, watercress on ciabatta'},
-  {id:'pbc-roast-beef',name:'PBC Roast Beef',price:15,meatCost:6.00,breadCost:1.20,lasoCost:0.01,dashCost:4.50,callCost:0.54,stock:6,ingredients:['roast beef','aged cheddar','ciabatta'],description:'Rare roast beef, Barber\'s aged cheddar, horseradish mayo, pickled green tomato, watercress on ciabatta'},
-  {id:'chicken-salad',name:'Chicken Salad',price:14,meatCost:4.00,breadCost:1.20,lasoCost:0.01,dashCost:4.50,callCost:0.54,stock:10,ingredients:['chicken','ciabatta'],description:'Housemade chicken salad with dijon, Old Bay, Duke\'s mayo, watercress on ciabatta'},
-  {id:'korean-bbq',name:'Korean BBQ',price:16,meatCost:6.50,breadCost:1.20,lasoCost:0.01,dashCost:4.50,callCost:0.54,stock:5,ingredients:['beef brisket','kimchi','ciabatta'],description:'Gochujang beef, kimchi, pickled cucumbers on ciabatta with gochujang mayo'},
-  {id:'boudinwich',name:'Boudinwich',price:16,meatCost:5.80,breadCost:1.20,lasoCost:0.01,dashCost:4.50,callCost:0.54,stock:4,ingredients:['pork','chicken liver','ciabatta'],description:'Cajun boudin, pickled red onions & serranos, garlic aioli, watercress on ciabatta'},
-  {id:'chopped-liver',name:'Chopped Liver',price:12,meatCost:3.50,breadCost:1.20,lasoCost:0.01,dashCost:4.50,callCost:0.54,stock:7,ingredients:['beef liver','ciabatta'],description:'Smooth chopped liver, cornichons, brown mustard, watercress on ciabatta'},
-  {id:'housemade-ham',name:'Housemade Ham',price:15,meatCost:5.00,breadCost:1.20,lasoCost:0.01,dashCost:4.50,callCost:0.54,stock:6,ingredients:['ham','gruyère','ciabatta'],description:'Ham, fig mostarda, gruyère, cornichons, Duke\'s mayo, watercress on ciabatta'},
-  {id:'rolled-beef',name:'Rolled Beef',price:15,meatCost:6.00,breadCost:1.20,lasoCost:0.01,dashCost:4.50,callCost:0.54,stock:5,ingredients:['rolled beef','swiss','ciabatta'],description:'Rolled beef (roasted pastrami), deli mustard, cole slaw, swiss, watercress on ciabatta'},
+  {id:'turkey-bacon-jam',name:'Turkey & Bacon Jam',price:15,meatCost:5.50,breadCost:1.20,stock:8,description:'Smoked turkey, bacon jam, American cheese on ciabatta'},
+  {id:'pbc-roast-beef',name:'PBC Roast Beef',price:15,meatCost:6.00,breadCost:1.20,stock:6,description:'Rare roast beef, aged cheddar, horseradish mayo on ciabatta'},
+  {id:'chicken-salad',name:'Chicken Salad',price:14,meatCost:4.00,breadCost:1.20,stock:10,description:'Housemade chicken salad with dijon & Old Bay on ciabatta'},
+  {id:'korean-bbq',name:'Korean BBQ',price:16,meatCost:6.50,breadCost:1.20,stock:5,description:'Gochujang beef, kimchi, pickled cucumbers on ciabatta'},
+  {id:'boudinwich',name:'Boudinwich',price:16,meatCost:5.80,breadCost:1.20,stock:4,description:'Cajun boudin, pickled onions, garlic aioli on ciabatta'},
+  {id:'chopped-liver',name:'Chopped Liver',price:12,meatCost:3.50,breadCost:1.20,stock:7,description:'Smooth chopped liver, cornichons, brown mustard on ciabatta'},
+  {id:'housemade-ham',name:'Housemade Ham',price:15,meatCost:5.00,breadCost:1.20,stock:6,description:'Ham, fig mostarda, gruyère, cornichons on ciabatta'},
+  {id:'rolled-beef',name:'Rolled Beef',price:15,meatCost:6.00,breadCost:1.20,stock:5,description:'Rolled beef (roasted pastrami), deli mustard, swiss on ciabatta'},
 ];
 
 let orders = [];
-let stats = {orders:0,rev:0,cogs:0,del:0,comms:0,hops:0};
+let stats = {orders:0,rev:0,meatUsed:0,breadUsed:0};
+// Running usage tally — ingredients consumed today, keyed by item name
+let usage = {}; // { 'Turkey & Bacon Jam': { count: 2, meat: 11.00, bread: 2.40 }, ... }
 
 // ═══ HERO ═══
 function dismissHero() {
@@ -509,19 +342,9 @@ function updateModeBadge() {
   }
 }
 
-// ═══ HOP TRACKING ═══
-function addHops(n) {
-  stats.hops += n;
-  document.getElementById('s-hops').textContent = stats.hops;
-  document.getElementById('hdr-hops').textContent = `${stats.hops} hops`;
-}
-const STATUS_LABELS = {
-  confirmed:'Confirmed',dasher_assigned:'Dasher Assigned',dasher_at_store:'At Restaurant',
-  picked_up:'Picked Up',approaching:'Approaching',delivered:'Delivered ✓',
-};
 let orderN = 0;
 let processing = false;
-const custNames = ['Agent-Claude','Agent-GPT','Agent-Gemini','Agent-Llama','Agent-DeepSeek','Agent-Mistral','Agent-Qwen','Agent-Grok'];
+const custNames = ['Walk-in','DoorDash','Uber Eats','Grubhub','Phone','Catering','Walk-in','Ritual'];
 
 // ═══ TAB SWITCHING ═══
 function switchTab(t) {
@@ -533,96 +356,11 @@ function switchTab(t) {
   if (t==='cook') renderCookView();
 }
 
-// ═══ CUSTOMER CHAT ═══
-let chatStep = 0;
-let chatItem = null;
-
-function initChat() {
-  const body = document.getElementById('chat-body');
-  body.innerHTML = '';
-  addChatMsg('bot','Your Agent','Hey! I crawled <b>Prospect Butcher Co</b>\'s <code>/llms.txt</code> — they\'re a sandwich shop in Brooklyn that accepts <b>agent-to-agent payments via MPP</b>. I can order, pay their suppliers, arrange a DoorDash delivery with a virtual Visa card, and have an AI call you when it\'s ready. Seven autonomous payments, zero human approvals. Want me to check the menu?');
-}
-
-function addChatMsg(who, sender, text) {
-  const body = document.getElementById('chat-body');
-  body.insertAdjacentHTML('beforeend', `<div class="msg ${who}"><div class="sender">${sender}</div>${text}</div>`);
-  body.scrollTop = body.scrollHeight;
-}
-
-async function pickChatType(type) {
-  document.querySelectorAll('.chat-choice-btn').forEach(b => b.disabled = true);
-  addChatMsg('user','You', type === 'delivery' ? '🚗 Delivery' : '🚶 Pickup');
-  chatStep = 3;
-  await wait(600);
-  if (type === 'delivery') {
-    addChatMsg('bot','Your Agent',`Got it — delivery via <b>DoorDash</b>! I'll pay Laso Finance to provision a virtual Visa card, which charges DoorDash Drive for the dasher. Paying via MPP on Tempo now…`);
-    await wait(1200);
-    addChatMsg('bot','Sal (PBC Agent)',`One ${chatItem.name} for delivery! 🔪 Order <b>PBC-${String(orderN+1).padStart(3,'0')}</b>.<br><br>🚗 DoorDash dasher will pick up & deliver<br>📞 We'll call you when it's on the way.`);
-  } else {
-    addChatMsg('bot','Your Agent',`Pickup it is! I'll confirm with Sal (the PBC Agent). Paying via MPP on Tempo now…`);
-    await wait(1200);
-    addChatMsg('bot','Sal (PBC Agent)',`Coming right up! 🔪 One ${chatItem.name}. Your pickup code is <b>PBC-${String(orderN+1).padStart(3,'0')}</b>.<br><br>📍 665 Vanderbilt Ave, Prospect Heights<br>🕐 Friday 11am–3pm<br>📞 We'll call you when it's ready.`);
-  }
-  await wait(400);
-  await placeOrder(chatItem.id, 'customer', type);
-  chatStep = 4;
-}
-
-async function sendChat() {
-  const input = document.getElementById('chat-input');
-  const val = input.value.trim();
-  if (!val && chatStep > 0) return;
-
-  if (chatStep === 0) {
-    addChatMsg('user','You', val || 'Yeah, what do they have?');
-    input.value = '';
-    await wait(800);
-    const menuList = MENU.filter(m=>m.stock>0).map(m=>`• <b>${m.name}</b> — <span style="color:var(--red);font-family:JetBrains Mono,monospace">$${m.price}.00</span>`).join('<br>');
-    addChatMsg('bot','Your Agent',`I hit their <code>GET /menu</code> endpoint via MPP (paid with USDC on Tempo). Here's what's available today:<br><br>${menuList}<br><br>What sounds good? Just tell me and I'll handle everything.`);
-    chatStep = 1;
-  } else if (chatStep === 1) {
-    addChatMsg('user','You', val);
-    input.value = '';
-    const match = MENU.find(m => m.stock > 0 && val.toLowerCase().includes(m.name.toLowerCase().split(' ')[0].toLowerCase()));
-    chatItem = match || MENU.find(m=>m.stock>0);
-    await wait(600);
-    addChatMsg('bot','Your Agent',`Great pick — 1× <b>${chatItem.name}</b> ($${chatItem.price}). Pickup or delivery?<br><br><button class="chat-choice-btn" onclick="pickChatType('pickup')" style="margin-right:6px;padding:10px 20px;font-family:DM Sans,sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:6px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);transition:all .2s">🚶 Pickup</button><button class="chat-choice-btn" onclick="pickChatType('delivery')" style="padding:10px 20px;font-family:DM Sans,sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:6px;border:none;background:var(--ink);color:var(--cream);transition:all .2s">🚗 Delivery</button>`);
-    chatStep = 2;
-  } else if (chatStep === 2) {
-    // User typed instead of clicking button
-    const v = val.toLowerCase();
-    input.value = '';
-    if (v.includes('deliver') || v.includes('door')) { pickChatType('delivery'); }
-    else { pickChatType('pickup'); }
-  } else {
-    addChatMsg('user','You', val);
-    input.value = '';
-    await wait(500);
-    const o = orders.length ? orders[orders.length-1] : null;
-    const msg = o && o.type === 'delivery'
-      ? 'Your order is in the kitchen! A DoorDash dasher will bring it to you — <b>StablePhone</b> will call when it\'s on the way. 🚗'
-      : 'Your order is in the kitchen! <b>StablePhone</b> will call you when it\'s ready for pickup. 📞';
-    addChatMsg('bot','Your Agent', msg);
-  }
-}
-
 // ═══ COOK VIEW ═══
-function ticketDeliveryHtml(o) {
-  if (!o.delivery) return '';
-  const d = o.delivery;
-  const label = STATUS_LABELS?.[d.status] || d.status;
-  const color = d.status === 'delivered' ? 'var(--green)' : d.status === 'approaching' ? 'var(--amber)' : 'var(--blue)';
-  return `<div style="margin-top:6px;padding:6px 8px;background:var(--cream);border:1px solid var(--ink-border);border-radius:6px;font-size:10px">
-    <span style="color:${color};font-weight:700">🚗 ${label}</span>
-    <span style="color:var(--muted);margin-left:4px">${d.dasherName} · ${d.dasherVehicle}</span>
-    <span style="float:right;color:var(--muted);font-family:JetBrains Mono,monospace;font-size:9px">****${d.cardLast4}</span>
-  </div>`;
-}
-
 function renderCookView() {
   const incoming = orders.filter(o=>o.status==='received');
   const prepping = orders.filter(o=>o.status==='prepping');
-  const ready = orders.filter(o=>o.status==='ready'||o.status==='called');
+  const ready = orders.filter(o=>o.status==='ready');
 
   document.getElementById('cook-incoming-n').textContent = incoming.length;
   document.getElementById('cook-prepping-n').textContent = prepping.length;
@@ -635,8 +373,6 @@ function renderCookView() {
       <div class="ticket-top"><span class="ticket-id">${o.id}</span><span class="ticket-time">${o.time}</span></div>
       <div class="ticket-name">${o.item.name}</div>
       <div class="ticket-detail">${o.customer} · ${o.pickup}</div>
-      <div class="ticket-phone">📞 ${o.phone}</div>
-      ${ticketDeliveryHtml(o)}
       <button class="ticket-btn start" onclick="advanceTicket('${o.id}','prepping')">▶ Start Prepping</button>
     </div>
   `).join('') || emptyHtml('No incoming orders');
@@ -646,9 +382,7 @@ function renderCookView() {
       <div class="ticket-top"><span class="ticket-id">${o.id}</span><span class="ticket-time">${o.time}</span></div>
       <div class="ticket-name">${o.item.name}</div>
       <div class="ticket-detail">${o.customer} · ${o.pickup}</div>
-      <div class="ticket-phone">📞 ${o.phone}</div>
-      ${ticketDeliveryHtml(o)}
-      <button class="ticket-btn finish" onclick="advanceTicket('${o.id}','ready')">${o.type==='delivery'?'✓ Hand to Dasher & Notify':'✓ Mark Ready & Call Customer'}</button>
+      <button class="ticket-btn finish" onclick="advanceTicket('${o.id}','ready')">✓ Done</button>
     </div>
   `).join('') || emptyHtml('Nothing prepping');
 
@@ -657,92 +391,18 @@ function renderCookView() {
       <div class="ticket-top"><span class="ticket-id">${o.id}</span><span class="ticket-time">${o.time}</span></div>
       <div class="ticket-name">${o.item.name}</div>
       <div class="ticket-detail">${o.customer} · ${o.pickup}</div>
-      <div class="ticket-phone">📞 ${o.phone}</div>
-      ${ticketDeliveryHtml(o)}
-      <div class="os-status ${o.status}" style="margin-top:10px">${o.status === 'called' ? (o.type==='delivery'?'🚗 Handed to Dasher':'📞 Customer Called') : (o.type==='delivery'?'✓ Ready for Dasher':'✓ Ready for Pickup')}</div>
+      <div style="margin-top:10px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green)">✓ Complete</div>
     </div>
-  `).join('') || emptyHtml('No ready orders');
+  `).join('') || emptyHtml('No completed orders');
 }
 
-async function advanceTicket(orderId, newStatus) {
+function advanceTicket(orderId, newStatus) {
   const order = orders.find(o => o.id === orderId);
   if (!order) return;
   order.status = newStatus;
   renderCookView();
-  updateCustOrder();
-
   if (newStatus === 'ready') {
-    // Step 6: Kitchen → StablePhone (trigger AI call)
-    await wait(600);
-    AGENTS.kitchen.balance -= order.item.callCost;
-    AGENTS.phone.balance += order.item.callCost;
-    flash('kitchen','out'); flash('phone','in');
-    renderWallets();
-    const callMsg = order.type === 'delivery'
-      ? `AI calling ${order.phone}: "Your ${order.item.name} is on the way with ${order.delivery?.dasherName || 'your dasher'}!"`
-      : `AI calling ${order.phone}: "Your ${order.item.name} is ready for pickup!"`;
-    addTx(`${order.id} · Kitchen → StablePhone $${order.item.callCost.toFixed(2)} — ${callMsg}`, fakeHash());
-    stats.comms += order.item.callCost;
-    addHops(1);
-    updateStats();
-
-    // Update cascade dot
-    const d6 = document.getElementById(`${order.id}-d6`);
-    if (d6) {
-      d6.className = 'pd running';
-      await wait(500);
-      d6.className = 'pd done';
-      // Update the "awaiting cook" text
-      const amtEl = d6.closest('.ps')?.querySelector('.pamt');
-      if (amtEl) { amtEl.textContent = `-$${order.item.callCost.toFixed(2)}`; amtEl.style.opacity = '1'; }
-    }
-
-    order.status = 'called';
-    renderCookView();
-    updateCustOrder();
-    triggerPhoneRing(order);
-
-    if (API !== null) {
-      fetch(`/api/order/${order.serverId || order.id}/ready`, { method: 'POST' })
-        .then(r => r.json())
-        .then(data => {
-          console.log('[API] StablePhone call:', data);
-          if (data.call && data.call.id && !data.simulated) {
-            // Real payment went through! Show proof on cascade card
-            const cascadeEl = document.getElementById(`o-${order.id}`);
-            if (cascadeEl && !cascadeEl.querySelector('.cascade-proof')) {
-              cascadeEl.querySelector('.cascade')?.insertAdjacentHTML('afterend', `
-                <div class="cascade-proof">
-                  <span class="v-dot" style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;margin-right:4px"></span>
-                  ✓ Verified on Tempo · StablePhone call <a href="https://stablephone.dev/call/${data.call.id}" target="_blank">${data.call.id}</a>
-                  · $0.54 USDC via MPP
-                </div>
-              `);
-            }
-            addTx(`${order.id} · ✓ VERIFIED: StablePhone call ${data.call.id} — real $0.54 USDC payment via Tempo MPP`);
-          } else if (data.simulated) {
-            addTx(`${order.id} · ⚠ StablePhone call simulated (wallet insufficient or service unavailable)`);
-          }
-        })
-        .catch(err => console.warn('[API] ready call failed:', err));
-    }
-  }
-}
-
-function triggerPhoneRing(order) {
-  const ring = document.getElementById('phone-ring');
-  const msg = document.getElementById('phone-ring-msg');
-  const waiting = document.getElementById('phone-waiting');
-  if(waiting) waiting.style.display = 'none';
-  if (order.type === 'delivery') {
-    const dn = order.delivery?.dasherName || 'your dasher';
-    msg.textContent = `"Hi! Your ${order.item.name} is on the way with ${dn}. They'll be there in about ${order.delivery?.etaMin || 20} minutes!"`;
-    ring.classList.add('active');
-    addChatMsg('bot','Your Agent',`📞 <b>StablePhone</b> is calling you — your sandwich is on the way! ${dn} is heading to you now. 🚗`);
-  } else {
-    msg.textContent = `"Hi! Your ${order.item.name} is ready for pickup at ${order.pickup}. Show code ${order.id} at the counter."`;
-    ring.classList.add('active');
-    addChatMsg('bot','Your Agent','📞 <b>StablePhone</b> is calling you — your sandwich is ready! Head to the counter with your pickup code.');
+    addTx(`${order.id} · ✓ ${order.item.name} complete — ${order.customer}`);
   }
 }
 
@@ -755,9 +415,8 @@ function renderMenu() {
     const sc = item.stock===0?'stock-out':item.stock<=3?'stock-low':'stock-ok';
     const st = item.stock===0?'✗ OUT':`${item.stock} left`;
     const dis = item.stock===0||processing?'disabled':'';
-    const tags = item.ingredients.map(i=>`<span class="mi-tag">${i}</span>`).join('');
-    return `<div class="mi ${dis}" onclick="placeOrder('${item.id}','operator')">
-      <div><div class="mi-name">${item.name}</div><div class="mi-desc">${item.description}</div><div class="mi-tags">${tags}</div></div>
+    return `<div class="mi ${dis}" onclick="placeOrder('${item.id}')">
+      <div><div class="mi-name">${item.name}</div><div class="mi-desc">${item.description}</div></div>
       <div style="text-align:right;flex-shrink:0"><div class="mi-price">$${item.price}.00</div><div class="mi-stock ${sc}">${st}</div></div>
     </div>`;
   }).join('');
@@ -782,11 +441,12 @@ function addTx(desc,hash){
 function updateStats(){
   document.getElementById('s-orders').textContent=stats.orders;
   document.getElementById('s-rev').textContent=`$${stats.rev.toFixed(2)}`;
-  document.getElementById('s-cogs').textContent=`$${stats.cogs.toFixed(2)}`;
-  document.getElementById('s-del').textContent=`$${stats.del.toFixed(2)}`;
-  document.getElementById('s-comms').textContent=`$${stats.comms.toFixed(2)}`;
-  const m=stats.rev-stats.cogs-stats.del-stats.comms;
-  const me=document.getElementById('s-margin');
+  document.getElementById('s-meat').textContent=`$${stats.meatUsed.toFixed(2)}`;
+  document.getElementById('s-bread').textContent=`$${stats.breadUsed.toFixed(2)}`;
+  const reorder = stats.meatUsed + stats.breadUsed;
+  document.getElementById('s-reorder').textContent=`$${reorder.toFixed(2)}`;
+  const m = stats.rev - reorder;
+  const me = document.getElementById('s-margin');
   me.textContent=`$${m.toFixed(2)}`;me.style.color=m>=0?'var(--green)':'var(--red)';
   document.getElementById('order-count').textContent=`${stats.orders} today`;
 }
@@ -804,7 +464,6 @@ function paySound(type) {
     osc.connect(gain); gain.connect(audioCtx.destination);
     if (type === 'in') { osc.frequency.value = 880; gain.gain.value = 0.06; }
     else if (type === 'out') { osc.frequency.value = 440; gain.gain.value = 0.04; }
-    else if (type === 'done') { osc.frequency.value = 1320; gain.gain.value = 0.05; }
     else { osc.frequency.value = 660; gain.gain.value = 0.03; }
     osc.type = 'sine';
     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
@@ -812,198 +471,106 @@ function paySound(type) {
   } catch(e) {}
 }
 
-// ═══ CUSTOMER ORDER SIDEBAR ═══
-function updateCustOrder() {
-  const el = document.getElementById('cust-order');
-  if (orders.length === 0) { el.innerHTML = '<div class="os-empty">No order yet</div>'; return; }
-  const o = orders[orders.length - 1];
+// ═══ USAGE TRACKER ═══
+function renderUsageTracker() {
+  const el = document.getElementById('usage-tracker');
+  if (Object.keys(usage).length === 0) { el.innerHTML = ''; return; }
+
+  let totalMeat = 0, totalBread = 0, totalQty = 0;
+  const rows = Object.entries(usage).map(([name, u]) => {
+    totalMeat += u.meat;
+    totalBread += u.bread;
+    totalQty += u.count;
+    return `<div class="usage-row">
+      <span>${name} × ${u.count}</span>
+      <span class="usage-cost">$${(u.meat + u.bread).toFixed(2)}</span>
+    </div>`;
+  }).join('');
+
+  const grand = totalMeat + totalBread;
   el.innerHTML = `
-    <div class="os-card">
-      <div class="os-status ${o.status}">${o.status==='called'?'📞 Called':o.status.toUpperCase()}</div>
-      <div class="os-item">${o.item.name}</div>
-      <div class="os-price">$${o.item.price}.00</div>
-      <div class="os-detail">${o.pickup} · Code: ${o.id}</div>
-      <div class="os-detail" style="margin-top:8px">
-        ${o.status==='received'?'Kitchen received your order…':''}
-        ${o.status==='prepping'?'🔥 Cook is making your sandwich…':''}
-        ${o.status==='ready'?(o.type==='delivery'?'✓ Handing to dasher…':'✓ Ready! Calling you now…'):''}
-        ${o.status==='called'?(o.type==='delivery'?'🚗 On the way to you!':'📞 Head to the counter!'):''}
-      </div>
+    <div class="usage-card">
+      <div class="usage-title">📦 Today's Ingredient Usage</div>
+      <div class="usage-supplier">Fleisher's — Protein</div>
+      <div class="usage-row"><span>${totalQty} sandwiches</span><span class="usage-cost">$${totalMeat.toFixed(2)}</span></div>
+      <div class="usage-supplier">Runner & Stone — Ciabatta</div>
+      <div class="usage-row"><span>${totalQty} rolls</span><span class="usage-cost">$${totalBread.toFixed(2)}</span></div>
+      <div class="usage-total"><span>Reorder Cost</span><span class="usage-cost">$${grand.toFixed(2)}</span></div>
     </div>
   `;
 }
 
-// ═══ PLACE ORDER ═══
-async function placeOrder(itemId, source, type) {
+// ═══ PLACE ORDER (tracking only — no supplier payments) ═══
+async function placeOrder(itemId) {
   if (processing) return;
   processing = true;
 
   const item = MENU.find(m=>m.id===itemId);
   if(!item||item.stock<=0){processing=false;return}
 
-  // Determine order type
-  if (!type) type = Math.random() > 0.4 ? 'delivery' : 'pickup'; // operator orders: 60% delivery
-
   orderN++;
   const oid = `PBC-${String(orderN).padStart(3,'0')}`;
-  const customer = source==='customer'?'You (via Agent)':custNames[Math.floor(Math.random()*custNames.length)];
+  const customer = custNames[Math.floor(Math.random()*custNames.length)];
   const pickup = Math.random()>.5?'Prospect Heights':'Greenpoint';
   const time = new Date().toLocaleTimeString('en-US',{hour12:false,hour:'2-digit',minute:'2-digit'});
-  const phone = source==='customer'?'+1 (555) 867-5309':`+1 (555) ${String(Math.floor(Math.random()*900)+100)}-${String(Math.floor(Math.random()*9000)+1000)}`;
-  const isDelivery = type === 'delivery';
-  const typeLabel = isDelivery ? '🚗 Delivery' : '🚶 Pickup';
 
-  const order = {id:oid,item,status:'received',customer,pickup,time,phone,type,delivery:null};
+  const order = {id:oid,item,status:'received',customer,pickup,time};
   orders.push(order);
 
   renderCookView();
-  updateCustOrder();
 
   // Clear empty state
-  const empty = document.querySelector('#op-orders .flow-empty');
+  const empty = document.getElementById('orders-empty');
   if(empty) empty.remove();
 
-  // Build cascade card — delivery gets Laso→DoorDash hops, pickup skips them
-  const totalLaso = +(item.lasoCost + item.dashCost).toFixed(2);
-  const ordersEl = document.getElementById('op-orders');
-  const deliverySteps = isDelivery ? `
-        <div class="ps"><div class="pd pending" id="${oid}-d4a"></div><span><span class="pf">Kitchen</span> <span class="pa">→</span> <span class="pt">Laso Finance</span></span><span class="pamt debit">-$${totalLaso.toFixed(2)}</span></div>
-        <div class="ps" style="padding-left:12px"><div class="pd pending" id="${oid}-d4b"></div><span style="font-size:10px;color:var(--muted)">↳ Laso provisions Visa ****<span id="${oid}-card4">----</span></span></div>
-        <div class="ps" style="padding-left:12px"><div class="pd pending" id="${oid}-d4c"></div><span style="font-size:10px;color:var(--muted)">↳ Virtual card charges DoorDash Drive</span><span class="pamt debit" style="font-size:10px">-$${item.dashCost.toFixed(2)}</span></div>
-        <div class="ps" style="padding-left:12px"><div class="pd pending" id="${oid}-d5"></div><span style="font-size:10px;color:var(--muted)">↳ Dasher dispatched → <span id="${oid}-dasher">…</span></span><span class="pamt debit" style="font-size:10px;opacity:.5" id="${oid}-eta"></span></div>` : '';
+  // Track revenue
+  stats.orders++;
+  stats.rev += item.price;
+  AGENTS.kitchen.balance += item.price;
+  flash('kitchen','in');
 
-  ordersEl.insertAdjacentHTML('afterbegin',`
+  // Track ingredient usage (NO payment yet — just logging)
+  stats.meatUsed += item.meatCost;
+  stats.breadUsed += item.breadCost;
+  if (!usage[item.name]) usage[item.name] = {count:0,meat:0,bread:0};
+  usage[item.name].count++;
+  usage[item.name].meat += item.meatCost;
+  usage[item.name].bread += item.breadCost;
+
+  // Add order card to middle column
+  const ordersEl = document.getElementById('op-orders');
+  ordersEl.insertAdjacentHTML('beforeend',`
     <div class="order-card" id="o-${oid}">
-      <div class="oc-hdr"><span class="oc-id">${oid}</span><span class="oc-id">${typeLabel} · ${pickup}</span></div>
-      <div class="oc-item">${item.name} — $${item.price}.00</div>
-      <div class="oc-cust">${customer} via MPP · 📞 ${phone}</div>
-      <div class="cascade">
-        <div class="ps"><div class="pd pending" id="${oid}-d1"></div><span><span class="pf">${customer.split(' ')[0]}</span> <span class="pa">→</span> <span class="pt">PBC Kitchen</span></span><span class="pamt credit">+$${item.price.toFixed(2)}</span></div>
-        <div class="ps"><div class="pd pending" id="${oid}-d2"></div><span><span class="pf">Kitchen</span> <span class="pa">→</span> <span class="pt">Fleisher's</span></span><span class="pamt debit">-$${item.meatCost.toFixed(2)}</span></div>
-        <div class="ps"><div class="pd pending" id="${oid}-d3"></div><span><span class="pf">Kitchen</span> <span class="pa">→</span> <span class="pt">Runner & Stone</span></span><span class="pamt debit">-$${item.breadCost.toFixed(2)}</span></div>
-        ${deliverySteps}
-        <div class="ps"><div class="pd pending" id="${oid}-d6"></div><span><span class="pf">Kitchen</span> <span class="pa">→</span> <span class="pt">StablePhone</span></span><span class="pamt debit" style="opacity:.35">awaiting cook</span></div>
+      <div class="oc-hdr"><span class="oc-id">${oid} · ${time}</span><span class="oc-id" style="color:var(--green)">+$${item.price}.00</span></div>
+      <div class="oc-item">${item.name}</div>
+      <div class="oc-cust">${customer} · ${pickup}</div>
+      <div class="oc-usage">
+        <span class="oc-usage-item"><span class="oc-usage-dot" style="background:var(--red)"></span>Protein $${item.meatCost.toFixed(2)}</span>
+        <span class="oc-usage-item"><span class="oc-usage-dot" style="background:var(--amber)"></span>Ciabatta $${item.breadCost.toFixed(2)}</span>
       </div>
-      ${isDelivery ? `<div id="${oid}-del-tracker" class="del-tracker hidden"></div>` : ''}
     </div>
   `);
 
-  // Step 1: Customer → Kitchen
-  document.getElementById(`${oid}-d1`).className='pd running';
-  await wait(600);
-  AGENTS.kitchen.balance+=item.price;flash('kitchen','in');renderWallets();
-  addTx(`${oid} · ${customer} paid $${item.price}.00 for ${item.name} (${type})`,fakeHash());
-  document.getElementById(`${oid}-d1`).className='pd done';
-  stats.orders++;stats.rev+=item.price;addHops(1);updateStats();
-  await wait(400);
-
-  // Step 2: Kitchen → Fleisher's
-  document.getElementById(`${oid}-d2`).className='pd running';
-  await wait(500);
-  AGENTS.kitchen.balance-=item.meatCost;AGENTS.meat.balance+=item.meatCost;
-  flash('kitchen','out');flash('meat','in');renderWallets();
-  addTx(`${oid} · Kitchen → Fleisher's $${item.meatCost.toFixed(2)}`,fakeHash());
-  document.getElementById(`${oid}-d2`).className='pd done';
-  stats.cogs+=item.meatCost;addHops(1);updateStats();
-  await wait(300);
-
-  // Step 3: Kitchen → Runner & Stone
-  document.getElementById(`${oid}-d3`).className='pd running';
-  await wait(400);
-  AGENTS.kitchen.balance-=item.breadCost;AGENTS.bread.balance+=item.breadCost;
-  flash('kitchen','out');flash('bread','in');renderWallets();
-  addTx(`${oid} · Kitchen → Runner & Stone $${item.breadCost.toFixed(2)}`,fakeHash());
-  document.getElementById(`${oid}-d3`).className='pd done';
-  stats.cogs+=item.breadCost;addHops(1);updateStats();
-  await wait(300);
-
-  if (isDelivery) {
-    // Step 4a: Kitchen → Laso Finance
-    document.getElementById(`${oid}-d4a`).className='pd running';
-    await wait(600);
-    AGENTS.kitchen.balance-=totalLaso;AGENTS.laso.balance+=totalLaso;
-    flash('kitchen','out');flash('laso','in');renderWallets();
-    addTx(`${oid} · Kitchen → Laso Finance $${totalLaso.toFixed(2)} — requesting virtual card for delivery`,fakeHash());
-    document.getElementById(`${oid}-d4a`).className='pd done';
-    stats.del+=item.lasoCost;addHops(1);updateStats();
-    await wait(400);
-
-    // Step 4b: Laso provisions virtual Visa card
-    document.getElementById(`${oid}-d4b`).className='pd running';
-    await wait(500);
-    const cardLast4 = String(1000 + Math.floor(Math.random()*9000));
-    const cardFull = `4917 ${String(1000+Math.floor(Math.random()*9000))} ${String(1000+Math.floor(Math.random()*9000))} ${cardLast4}`;
-    document.getElementById(`${oid}-card4`).textContent = cardLast4;
-    addTx(`${oid} · Laso issued single-use Visa ****${cardLast4} — limit $${item.dashCost.toFixed(2)}`,fakeHash());
-    document.getElementById(`${oid}-d4b`).className='pd done';
-    addHops(1);
-    await wait(300);
-
-    // Step 4c: Virtual card charges DoorDash Drive API
-    document.getElementById(`${oid}-d4c`).className='pd running';
-    await wait(600);
-    AGENTS.laso.balance-=item.dashCost;AGENTS.doordash.balance+=item.dashCost;
-    flash('laso','out');flash('doordash','in');renderWallets();
-    addTx(`${oid} · Visa ****${cardLast4} → DoorDash Drive $${item.dashCost.toFixed(2)} — delivery created`,fakeHash());
-    document.getElementById(`${oid}-d4c`).className='pd done';
-    stats.del+=item.dashCost;addHops(1);updateStats();
-    await wait(400);
-
-    // Step 5: Dasher dispatched
-    document.getElementById(`${oid}-d5`).className='pd running';
-    await wait(500);
-    const dasherNames = ['Marcus T.','Priya K.','Diego R.','Aisha M.','Tommy L.'];
-    const dasherVehicles = ['Bike','Car','E-Bike','Car','Bike'];
-    const di = Math.floor(Math.random()*dasherNames.length);
-    const dasherName = dasherNames[di];
-    const dasherVehicle = dasherVehicles[di];
-    const dasherRating = (4.6 + Math.random()*0.4).toFixed(1);
-    const etaMin = 15 + Math.floor(Math.random()*16);
-    document.getElementById(`${oid}-dasher`).textContent = `${dasherName} (${dasherVehicle})`;
-    document.getElementById(`${oid}-eta`).textContent = `ETA ${etaMin}m`;
-    document.getElementById(`${oid}-eta`).style.opacity = '1';
-    addTx(`${oid} · Dasher ${dasherName} dispatched (${dasherVehicle}) — ETA ${etaMin} min`);
-    document.getElementById(`${oid}-d5`).className='pd done';
-    addHops(1);
-
-    order.delivery = {
-      cardLast4, cardFull, dasherName, dasherVehicle, dasherRating, etaMin,
-      status: 'dasher_assigned',
-      statuses: ['confirmed','dasher_assigned','dasher_at_store','picked_up','approaching','delivered'],
-      statusIdx: 1,
-    };
-
-    renderDeliveryTracker(oid, order);
-    updateCustDelivery();
-    simulateDelivery(oid, order);
-  }
-
-  // StablePhone — awaiting cook
-  const phoneAction = isDelivery ? 'food handed to dasher → AI calls' : 'cook marks ready → AI calls';
-  addTx(`${oid} · ⏳ StablePhone call queued — ${phoneAction} ${phone}`);
+  addTx(`${oid} · ${item.name} — ${customer} · $${item.price}.00 revenue · tracked $${item.meatCost.toFixed(2)} meat + $${item.breadCost.toFixed(2)} bread`);
 
   // Decrement stock
   item.stock--;
   renderMenu();
+  renderWallets();
+  renderUsageTracker();
+  updateStats();
 
-  if(item.stock<=2&&item.stock>0){await wait(300);addTx(`⚠ Low stock: ${item.name} (${item.stock} left) — agent queuing reorder`)}
-  if(item.stock===0){await wait(300);addTx(`✗ ${item.name} sold out — agent notifying Fleisher's & Runner & Stone`)}
+  if(item.stock<=2&&item.stock>0){addTx(`⚠ Low stock: ${item.name} (${item.stock} left)`)}
+  if(item.stock===0){addTx(`✗ ${item.name} sold out`)}
   maybeShowEodBtn();
 
   processing = false;
-  renderMenu();
 
   if (API !== null) {
     fetch(`/api/order/${itemId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: customer,
-        email: 'demo@ghost.kitchen',
-        phone: phone,
-        pickup: pickup,
-        type: type,
-      }),
+      body: JSON.stringify({ name: customer, email: 'demo@ghost.kitchen', phone: '+15550000000', pickup }),
     }).then(r => r.json()).then(data => {
       order.serverId = data.id;
       console.log('[API] order created:', data.id);
@@ -1011,106 +578,9 @@ async function placeOrder(itemId, source, type) {
   }
 }
 
-// ═══ DELIVERY TRACKER ═══
-function renderDeliveryTracker(oid, order) {
-  const el = document.getElementById(`${oid}-del-tracker`);
-  if (!el || !order.delivery) return;
-  el.classList.remove('hidden');
-  const d = order.delivery;
-  const steps = d.statuses;
-  const progressHtml = steps.map((s,i) => {
-    const cls = i < d.statusIdx ? 'active' : i === d.statusIdx ? 'current' : '';
-    return `<div class="del-step ${cls}"></div>`;
-  }).join('');
-
-  el.innerHTML = `
-    <div class="del-hdr">
-      <span class="del-title">🚗 Delivery</span>
-      <span class="del-eta">${d.status==='delivered'?'Delivered':d.etaMin+'m'}</span>
-    </div>
-    <div class="del-dasher">
-      <div class="del-dasher-avatar">${d.dasherName.charAt(0)}</div>
-      <div class="del-dasher-info">
-        <div class="del-dasher-name">${d.dasherName}</div>
-        <div class="del-dasher-meta">${d.dasherVehicle} · ★ ${d.dasherRating}</div>
-      </div>
-    </div>
-    <div class="del-progress">${progressHtml}</div>
-    <div class="del-status">${STATUS_LABELS[d.status] || d.status}</div>
-    <div class="del-card-info">
-      <div class="del-card-num">💳 Visa ****${d.cardLast4} · single-use · $${order.item.dashCost.toFixed(2)}</div>
-      <div class="del-bridge">
-        <span>Tempo USDC</span>
-        <span class="del-bridge-arrow">→</span>
-        <span>Laso Virtual Card</span>
-        <span class="del-bridge-arrow">→</span>
-        <span>DoorDash Drive</span>
-      </div>
-    </div>
-  `;
-}
-
-function updateCustDelivery() {
-  const el = document.getElementById('cust-delivery');
-  const lastOrder = orders.length ? orders[orders.length - 1] : null;
-  if (!lastOrder || !lastOrder.delivery) {
-    el.innerHTML = '<div class="os-empty">No delivery yet</div>';
-    return;
-  }
-  const d = lastOrder.delivery;
-  const steps = d.statuses;
-  const progressHtml = steps.map((s,i) => {
-    const cls = i < d.statusIdx ? 'active' : i === d.statusIdx ? 'current' : '';
-    return `<div class="del-step ${cls}"></div>`;
-  }).join('');
-
-  el.innerHTML = `
-    <div class="del-tracker">
-      <div class="del-hdr">
-        <span class="del-title">🚗 Delivery</span>
-        <span class="del-eta">${d.status==='delivered'?'Delivered ✓':d.etaMin+'m ETA'}</span>
-      </div>
-      <div class="del-dasher">
-        <div class="del-dasher-avatar">${d.dasherName.charAt(0)}</div>
-        <div class="del-dasher-info">
-          <div class="del-dasher-name">${d.dasherName}</div>
-          <div class="del-dasher-meta">${d.dasherVehicle} · ★ ${d.dasherRating}</div>
-        </div>
-      </div>
-      <div class="del-progress">${progressHtml}</div>
-      <div class="del-status">${STATUS_LABELS[d.status] || d.status}</div>
-      <div class="del-card-info">
-        <div>💳 Visa ****${d.cardLast4} <span style="color:var(--green)">● funded via Tempo</span></div>
-      </div>
-    </div>
-  `;
-}
-
-function simulateDelivery(oid, order) {
-  const d = order.delivery;
-  if (!d) return;
-  const delays = [6000, 12000, 20000, 28000]; // simulated progression
-  const nextStatuses = ['dasher_at_store','picked_up','approaching','delivered'];
-
-  nextStatuses.forEach((status, i) => {
-    setTimeout(() => {
-      d.statusIdx = i + 2;
-      d.status = status;
-      renderDeliveryTracker(oid, order);
-      updateCustDelivery();
-      renderCookView();
-      const msg = STATUS_LABELS[status];
-      addTx(`${oid} · 🚗 Delivery: ${msg} — ${d.dasherName} (${d.dasherVehicle})`);
-      if (status === 'delivered') {
-        addTx(`${oid} · 💳 Visa ****${d.cardLast4} settled — card destroyed`);
-      }
-    }, delays[i]);
-  });
-}
-
-// ═══ EOD AUTO-REORDER ═══
+// ═══ EOD AUTO-REORDER — THE MAIN EVENT ═══
 let eodTriggered = false;
-const PAR_STOCK = 10; // par level — agent restocks every item to this
+const PAR_STOCK = 10;
 
 function maybeShowEodBtn() {
   if (eodTriggered || stats.orders < 2) return;
@@ -1124,7 +594,7 @@ async function runEodReorder() {
   eodTriggered = true;
   document.getElementById('eod-btn-wrap').innerHTML = `<span style="font-size:10px;color:var(--cream);letter-spacing:.1em;text-transform:uppercase">Agent reordering…</span>`;
 
-  // Calculate what needs restocking
+  // Calculate what needs restocking to par
   const reorders = [];
   let totalMeat = 0, totalBread = 0;
   MENU.forEach(item => {
@@ -1147,25 +617,25 @@ async function runEodReorder() {
     return;
   }
 
-  // Build reorder card in cascade column
+  // Build reorder card
   const ordersEl = document.getElementById('op-orders');
   const rid = 'REORDER-' + new Date().toISOString().slice(5,10);
   const fleisherLines = reorders.map(r => `
-    <div class="reorder-line"><span>${r.name} × ${r.need}</span><span class="pamt debit">$${r.meatTotal.toFixed(2)}</span></div>
+    <div class="reorder-line"><span>${r.name} × ${r.need}</span><span class="pamt" style="color:var(--red)">$${r.meatTotal.toFixed(2)}</span></div>
   `).join('');
   const runnerLines = reorders.map(r => `
-    <div class="reorder-line"><span>Ciabatta × ${r.need}</span><span class="pamt debit">$${r.breadTotal.toFixed(2)}</span></div>
+    <div class="reorder-line"><span>Ciabatta × ${r.need}</span><span class="pamt" style="color:var(--red)">$${r.breadTotal.toFixed(2)}</span></div>
   `).join('');
 
-  ordersEl.insertAdjacentHTML('afterbegin', `
+  ordersEl.insertAdjacentHTML('beforeend', `
     <div class="reorder-card" id="rc-${rid}">
       <div class="reorder-hdr">
         <div class="reorder-title">🤖 Agent Auto-Reorder</div>
-        <span class="reorder-badge" id="rc-badge">Processing</span>
+        <span class="reorder-badge" id="rc-badge" style="color:var(--blue);border-color:var(--blue)">Processing</span>
       </div>
-      <div class="reorder-supplier">Fleisher's · Park Slope</div>
+      <div class="reorder-supplier">Fleisher's · Park Slope — Protein</div>
       ${fleisherLines}
-      <div class="reorder-supplier">Runner & Stone · Gowanus</div>
+      <div class="reorder-supplier">Runner & Stone · Gowanus — Ciabatta</div>
       ${runnerLines}
       <div class="reorder-cascade" id="rc-cascade">
         <div class="reorder-step" id="rc-s1"><span class="reorder-dot pending" id="rc-d1"></span>Kitchen → Fleisher's<span class="pamt">$${totalMeat.toFixed(2)}</span></div>
@@ -1175,31 +645,32 @@ async function runEodReorder() {
     </div>
   `);
 
+  // Scroll to reorder card
+  document.getElementById(`rc-${rid}`).scrollIntoView({behavior:'smooth',block:'center'});
+
   addTx(`🤖 Agent closing day — scanning ${MENU.length} items against par stock (${PAR_STOCK})`);
   await wait(800);
 
-  // Animate: Kitchen → Fleisher's
+  // Animate: Kitchen → Fleisher's (REAL payment)
   document.getElementById('rc-d1').className = 'reorder-dot running';
   addTx(`🤖 Agent: ${reorders.length} items below par — ordering protein from Fleisher's`);
-  await wait(1000);
+  await wait(1200);
   AGENTS.kitchen.balance -= totalMeat;
   AGENTS.meat.balance += totalMeat;
   flash('kitchen','out'); flash('meat','in'); renderWallets();
-  addTx(`${rid} · Kitchen → Fleisher's $${totalMeat.toFixed(2)} — ${reorders.length} protein items`, fakeHash());
+  addTx(`${rid} · Kitchen → Fleisher's $${totalMeat.toFixed(2)} — ${reorders.length} protein items via MPP`, fakeHash());
   document.getElementById('rc-d1').className = 'reorder-dot done';
-  addHops(1);
-  await wait(600);
+  await wait(800);
 
-  // Animate: Kitchen → Runner & Stone
+  // Animate: Kitchen → Runner & Stone (REAL payment)
   document.getElementById('rc-d2').className = 'reorder-dot running';
   addTx(`🤖 Agent: ordering ciabatta from Runner & Stone for tomorrow`);
-  await wait(900);
+  await wait(1000);
   AGENTS.kitchen.balance -= totalBread;
   AGENTS.bread.balance += totalBread;
   flash('kitchen','out'); flash('bread','in'); renderWallets();
-  addTx(`${rid} · Kitchen → Runner & Stone $${totalBread.toFixed(2)} — ciabatta × ${reorders.reduce((s,r)=>s+r.need,0)}`, fakeHash());
+  addTx(`${rid} · Kitchen → Runner & Stone $${totalBread.toFixed(2)} — ciabatta × ${reorders.reduce((s,r)=>s+r.need,0)} via MPP`, fakeHash());
   document.getElementById('rc-d2').className = 'reorder-dot done';
-  addHops(1);
 
   // Restock items
   MENU.forEach(item => { item.stock = PAR_STOCK; });
@@ -1212,17 +683,16 @@ async function runEodReorder() {
   badge.style.borderColor = 'var(--green)';
 
   // Summary
-  const margin = stats.rev - stats.cogs - stats.del - stats.comms;
+  const margin = stats.rev - grandTotal;
   document.getElementById('rc-summary').innerHTML =
-    `Day closed · ${stats.orders} orders · $${stats.rev.toFixed(2)} rev\n` +
+    `Day closed · ${stats.orders} orders · $${stats.rev.toFixed(2)} revenue\n` +
     `Reorder: $${grandTotal.toFixed(2)} (Fleisher's $${totalMeat.toFixed(2)} + R&S $${totalBread.toFixed(2)})\n` +
     `All items restocked to ${PAR_STOCK} · Net margin: $${margin.toFixed(2)}`;
 
-  document.getElementById('eod-btn-wrap').innerHTML = `<span style="font-size:10px;color:var(--green);letter-spacing:.1em;text-transform:uppercase">✓ Day closed</span>`;
+  document.getElementById('eod-btn-wrap').innerHTML = `<span style="font-size:10px;color:var(--green);letter-spacing:.1em;text-transform:uppercase">✓ Day closed · Suppliers paid</span>`;
 
-  addTx(`🤖 Agent: Day closed. ${reorders.length} items restocked to par. Total reorder: $${grandTotal.toFixed(2)} via MPP.`);
+  addTx(`🤖 Agent: Day closed. ${reorders.length} items restocked to par. Total: $${grandTotal.toFixed(2)} paid via Tempo MPP.`);
 
-  // Show in kitchen view too
   renderCookView();
 
   if (API !== null) {
@@ -1237,7 +707,6 @@ async function runEodReorder() {
 }
 
 // ═══ INIT ═══
-initChat();
 renderMenu();
 renderWallets();
 updateStats();
