@@ -754,7 +754,7 @@ async function runEodReorder() {
   document.getElementById('ap-s2').className = 'agent-post-step done';
   document.getElementById('ap-s3').className = 'agent-post-step running';
   document.getElementById('ap-img-bar').style.display = 'none';
-  document.getElementById('ap-img-label').textContent = '🖼️ "${specialName}" — AI-generated via MPP';
+  document.getElementById('ap-img-label').textContent = '\u{1F5BC}\uFE0F "' + specialName + '" — AI-generated via MPP';
   addTx(`🖼️ Hero image ready — Stability AI via MPP ($0.035)`);
   await wait(700);
 
