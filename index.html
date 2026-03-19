@@ -607,7 +607,7 @@ async function runEodReorder() {
         <div class="reorder-step" id="rc-s0"><span class="reorder-dot done" id="rc-d0"></span>Weather forecast checked<span class="pamt">$0.003</span></div>
         <div class="reorder-step" id="rc-s1"><span class="reorder-dot pending" id="rc-d1"></span>Kitchen → Fleisher's<span class="pamt">$${totalMeat.toFixed(2)}</span></div>
         <div class="reorder-step" id="rc-s2"><span class="reorder-dot pending" id="rc-d2"></span>Kitchen → Runner & Stone<span class="pamt">$${totalBread.toFixed(2)}</span></div>
-        <div class="reorder-step" id="rc-s3"><span class="reorder-dot pending" id="rc-d3"></span>Generate daily special image<span class="pamt">$0.035</span></div>
+        <div class="reorder-step" id="rc-s3"><span class="reorder-dot pending" id="rc-d3"></span>Generate & post to X<span class="pamt">$0.035</span></div>
       </div>
       <div class="reorder-summary" id="rc-summary"></div>
     </div>
@@ -641,30 +641,40 @@ async function runEodReorder() {
   document.getElementById('rc-d2').className = 'reorder-dot done';
   await wait(800);
 
-  // ── STEP 3: Generate daily special image via Stability AI ──
+  // ── STEP 3: Generate & post daily special to X via Stability AI ──
   document.getElementById('rc-d3').className = 'reorder-dot running';
-  // Pick top seller
   const topSeller = Object.entries(usage).sort((a,b) => b[1].count - a[1].count)[0];
   const specialName = topSeller ? topSeller[0] : MENU[0].name;
-  addTx(`🎨 Agent: Generating hero image for tomorrow's special — "${specialName}" via Stability AI (MPP $0.035)…`);
+  const soldCount = topSeller ? topSeller[1].count : 0;
+  addTx(`🎨 Agent: Generating image of "${specialName}" via Stability AI (MPP $0.035)…`);
   await wait(1800);
   AGENTS.kitchen.balance -= 0.035;
   renderWallets();
-  addTx(`🎨 Daily special image generated — "${specialName}" pushed to digital menu board`);
+  addTx(`📱 Posted to @PBC_Brooklyn on X — "${specialName}" daily special`);
   document.getElementById('rc-d3').className = 'reorder-dot done';
 
-  // Show the daily special card
+  // Show the tweet preview card
   const cascade = document.getElementById('rc-cascade');
   cascade.insertAdjacentHTML('afterend', `
-    <div style="margin-top:14px;padding:14px;background:linear-gradient(135deg,#2a1a0e,#1a1a18);border:1px solid rgba(166,29,61,.25);border-radius:8px;animation:slideIn .4s ease">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span style="font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red)">Tomorrow's Special</span>
-        <span style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace">Digital Menu Board</span>
-      </div>
-      <div style="font-family:'Instrument Serif',serif;font-size:20px;color:var(--cream);margin-bottom:4px">${specialName}</div>
-      <div style="font-size:10px;color:var(--muted);line-height:1.5;margin-bottom:8px">Best seller today · ${topSeller ? topSeller[1].count : 0} sold · AI-generated hero image</div>
-      <div style="height:64px;border-radius:6px;background:linear-gradient(135deg,#3a2a1a 0%,#2a1510 40%,#1a1a18 100%);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.05)">
-        <span style="font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">🖼️ Hero image · Stability AI via MPP</span>
+    <div style="margin-top:14px;padding:14px 16px;background:var(--ink);border:1px solid rgba(255,255,255,.1);border-radius:12px;animation:slideIn .4s ease">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:14px;color:var(--ink);flex-shrink:0">P</div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+            <span style="font-size:12px;font-weight:700;color:var(--cream)">PBC Sandwich</span>
+            <span style="font-size:11px;color:var(--muted)">@PBC_Brooklyn · now</span>
+          </div>
+          <div style="font-size:12px;color:var(--cream);line-height:1.5;margin-bottom:10px">Today's best seller: ${specialName} 🔥 ${soldCount} sold before lunch. Back tomorrow — come early. #ParkSlope #BrooklynEats</div>
+          <div style="height:56px;border-radius:8px;background:linear-gradient(135deg,#3a2a1a 0%,#2a1510 40%,#1a1a18 100%);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.06)">
+            <span style="font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase">🖼️ AI-generated · Stability AI via MPP</span>
+          </div>
+          <div style="display:flex;gap:24px;margin-top:10px">
+            <span style="font-size:10px;color:var(--muted)">💬 —</span>
+            <span style="font-size:10px;color:var(--muted)">🔁 —</span>
+            <span style="font-size:10px;color:var(--muted)">❤️ —</span>
+            <span style="font-size:10px;color:var(--muted)">📊 —</span>
+          </div>
+        </div>
       </div>
     </div>
   `);
@@ -697,7 +707,7 @@ async function runEodReorder() {
   document.getElementById('rc-summary').innerHTML =
     `P&L · ${stats.orders} orders · $${stats.rev.toFixed(2)} revenue\n` +
     `COGS: $${cogs.toFixed(2)} (${cogsPct}%) — Fleisher's $${totalMeat.toFixed(2)} + R&S $${totalBread.toFixed(2)}\n` +
-    `MPP services: $${serviceCosts.toFixed(3)} (weather + menu image)\n` +
+    `MPP services: $${serviceCosts.toFixed(3)} (weather + X post)\n` +
     `Gross margin: $${margin.toFixed(2)} (${marginPct}%)\n` +
     `Delivery: Fleisher's 6:00 AM · R&S 5:30 AM`;
 
@@ -763,7 +773,7 @@ async function startAutoDemo() {
   narrate('Step 2 · Day Closes', 'All orders are in. Now the agent checks tomorrow\'s weather forecast via MPP, adjusts stock levels, and calculates the reorder.', 5500);
   await wait(5800);
 
-  narrate('Step 3 · Smart Reorder', 'Weather-adjusted ordering — the agent pays suppliers and generates a daily special image for the digital menu. All via MPP services.', 5500);
+  narrate('Step 3 · Smart Reorder', 'Weather-adjusted ordering — the agent pays suppliers, generates a hero image, and posts the daily special to X. All via MPP.', 5500);
   await wait(1200);
 
   await runEodReorder();
