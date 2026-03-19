@@ -224,13 +224,114 @@
       .op-col:first-child{display:none}
       .stats-bar{gap:16px}
     }
+
+    /* ── Mobile ── */
     @media(max-width:700px){
-      .op-layout{grid-template-columns:1fr}
-      .op-col{border-right:none!important}
-      .op-col:nth-child(3){display:none}
-      .stats-bar{gap:12px;padding:8px 14px}
-      .stat-val{font-size:14px}
-      .narration{max-width:90vw;font-size:12px;bottom:70px}
+      /* Hero */
+      .hero-content{padding:24px 20px}
+      .hero-title{font-size:28px;margin-bottom:16px}
+      .hero-scenario{font-size:12px;line-height:1.6;margin-bottom:20px}
+      .hero-steps{flex-wrap:wrap;max-width:100%;margin-bottom:24px}
+      .hero-step{flex:1 1 45%;padding:8px 4px}
+      .hero-step+.hero-step::before{display:none}
+      .hero-step-label{font-size:10px}
+      .hero-step-sub{font-size:9px}
+      .hero-btns{flex-direction:column;gap:10px;width:100%}
+      .hero-enter{width:100%;padding:14px 20px}
+      .hero-tempo{margin-top:20px}
+
+      /* Header */
+      header{padding:10px 14px}
+      .logo-sub{display:none}
+      .tabs{display:none}
+      .hdr-badge{display:none}
+      .logo-mark{width:28px;height:28px;font-size:14px}
+      .logo-text{font-size:15px}
+      .mode-badge{font-size:7px;padding:2px 5px}
+
+      /* Ticker */
+      .ticker{padding:4px 0}
+      .ticker-text{font-size:8px;letter-spacing:.05em}
+      .ticker-dot{margin:0 12px;font-size:6px}
+
+      /* View — scrollable single column */
+      .view{height:auto;min-height:100vh}
+      .op-layout{display:flex!important;flex-direction:column;overflow:visible}
+      .op-col{border-right:none!important;overflow:visible;display:flex!important}
+
+      /* Menu — horizontal scroll strip */
+      .op-col:first-child{order:1}
+      .op-col:first-child .col-body{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:8px 12px;flex:none;-webkit-overflow-scrolling:touch}
+      .op-col:first-child .col-body .mi{flex:0 0 180px;margin-bottom:0}
+      .mi{padding:10px 12px}
+      .mi-name{font-size:11px}
+      .mi-desc{font-size:9px;max-width:120px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .mi-price{font-size:11px}
+
+      /* Wallets — horizontal scroll row */
+      .op-col:nth-child(3){order:2}
+      .op-col:nth-child(3) .col-hdr:last-of-type,
+      .op-col:nth-child(3) .r-section:last-of-type,
+      .op-col:nth-child(3)>div[style*="border-top"]{display:none}
+      .op-col:nth-child(3) .r-section:first-of-type{display:flex;gap:8px;overflow-x:auto;padding:8px 12px;-webkit-overflow-scrolling:touch}
+      .w{flex:0 0 160px;margin-bottom:0;padding:10px 12px}
+      .w-name{font-size:10px}
+      .w-bal{font-size:20px}
+      .w-addr{font-size:8px}
+      .w-role{font-size:8px}
+      .w-cur{font-size:7px}
+
+      /* Orders — main content, full height */
+      .op-col:nth-child(2){order:3}
+      .op-col:nth-child(2) .col-body{overflow:visible;padding:8px 12px;flex:none}
+      .col-hdr{padding:10px 14px;font-size:9px;letter-spacing:.12em}
+
+      /* Order cards */
+      .order-card{padding:10px 12px}
+      .oc-item{font-size:14px}
+      .oc-id{font-size:8px}
+      .oc-cust{font-size:10px}
+      .oc-usage{font-size:9px}
+
+      /* Reorder */
+      .reorder-card{padding:12px}
+      .reorder-title{font-size:15px}
+      .reorder-step{font-size:10px}
+      .reorder-line{font-size:10px}
+      .reorder-supplier{font-size:9px}
+      .reorder-summary{font-size:9px}
+
+      /* Agent post card */
+      .agent-post-header{flex-direction:column;gap:4px;align-items:flex-start;padding:10px 14px}
+      .agent-post-header .ap-title{font-size:13px}
+      .agent-post-steps{padding:8px 12px}
+      .agent-post-step .step-label{font-size:8px}
+      .agent-post-step .step-detail{font-size:7px}
+      .agent-post-tweet{padding:10px 12px}
+      .agent-post-tweet .tweet-body{font-size:10px}
+      .agent-post-footer{padding:6px 12px;flex-wrap:wrap;gap:4px}
+
+      /* Usage card */
+      .usage-card{padding:12px}
+      .usage-title{font-size:9px}
+      .usage-row{font-size:11px}
+
+      /* Stats bar — compact 3×2 grid */
+      .stats-bar{display:grid!important;grid-template-columns:repeat(3,1fr);gap:0;padding:6px 10px}
+      .stats-bar>div{text-align:center;padding:3px 4px}
+      .stats-bar>div[style*="flex:1"]{display:none}
+      .stats-bar>div:last-child{grid-column:1/-1;text-align:center;padding:4px 0 2px}
+      .stat-label{font-size:7px;letter-spacing:.08em}
+      .stat-val{font-size:13px}
+
+      /* Narration — top position on mobile */
+      .narration{max-width:92vw;font-size:11px;bottom:auto;top:52px;left:50%;padding:10px 14px 10px 12px;border-radius:10px;line-height:1.5;gap:10px}
+      .narration .n-step{font-size:8px}
+      .narration .n-text{font-size:11px}
+
+      /* Flow empty */
+      .flow-empty{min-height:120px}
+      .flow-empty-text{font-size:10px}
     }
   </style>
 </head>
@@ -440,6 +541,7 @@ function updateStats(){
 }
 
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function scrollIntoViewSmart(el){if(!el)return;const container=el.closest('.col-body');if(container&&container.scrollHeight>container.clientHeight){el.scrollIntoView({behavior:'smooth',block:'nearest'});}else{el.scrollIntoView({behavior:'smooth',block:'center'});}}
 function fakeHash(){const h='0123456789abcdef';let s='0x';for(let i=0;i<64;i++)s+=h[Math.floor(Math.random()*16)];return s}
 
 // ═══ PAYMENT SOUND ═══
@@ -538,6 +640,7 @@ async function placeOrder(itemId) {
   `);
 
   addTx(`${oid} · ${item.name} — ${customer} · $${item.price}.00 revenue · tracked $${item.meatCost.toFixed(2)} meat + $${item.breadCost.toFixed(2)} bread`);
+  scrollIntoViewSmart(document.getElementById(`o-${oid}`));
 
   // Decrement stock
   item.stock--;
@@ -666,13 +769,14 @@ async function runEodReorder() {
   `);
 
   // Scroll to reorder card
-  document.getElementById(`rc-${rid}`).scrollIntoView({behavior:'smooth',block:'center'});
+  scrollIntoViewSmart(document.getElementById(`rc-${rid}`));
 
   addTx(`🤖 Agent closing day — scanning ${MENU.length} items against par stock (${PAR_STOCK}) with weather adjustments`);
   await wait(800);
 
   // Animate: Kitchen → Fleisher's
   document.getElementById('rc-d1').className = 'reorder-dot running';
+  scrollIntoViewSmart(document.getElementById('rc-s1'));
   addTx(`🤖 Agent: ${reorders.length} items below par — ordering protein from Fleisher's`);
   await wait(1200);
   AGENTS.kitchen.balance -= totalMeat;
@@ -684,6 +788,7 @@ async function runEodReorder() {
 
   // Animate: Kitchen → Runner & Stone
   document.getElementById('rc-d2').className = 'reorder-dot running';
+  scrollIntoViewSmart(document.getElementById('rc-s2'));
   addTx(`🤖 Agent: ordering ciabatta from Runner & Stone for tomorrow`);
   await wait(1000);
   AGENTS.kitchen.balance -= totalBread;
@@ -734,6 +839,7 @@ async function runEodReorder() {
     </div>
   `);
 
+  scrollIntoViewSmart(document.getElementById('agent-post-card'));
   addTx(`📱 Agent: Social media manager activated — analyzing today's ${stats.orders} orders`);
   await wait(900);
 
@@ -744,6 +850,7 @@ async function runEodReorder() {
 
   // Show tweet shell, start image generation
   document.getElementById('ap-tweet').style.display = 'block';
+  scrollIntoViewSmart(document.getElementById('ap-tweet'));
   document.getElementById('ap-img-bar').style.display = 'block';
   document.getElementById('ap-img-label').textContent = 'generating…';
   await wait(1800);
@@ -772,6 +879,7 @@ async function runEodReorder() {
   document.getElementById('ap-s4').className = 'agent-post-step done';
   document.getElementById('ap-tweet-actions').style.display = 'flex';
   document.getElementById('ap-footer').style.display = 'flex';
+  scrollIntoViewSmart(document.getElementById('ap-footer'));
   const costBadge = document.getElementById('ap-cost-badge');
   costBadge.textContent = 'Posted ✓ · $0.035';
   costBadge.style.color = 'var(--green)';
@@ -804,6 +912,7 @@ async function runEodReorder() {
   const margin = stats.rev - cogs;
   const marginPct = ((margin / stats.rev) * 100).toFixed(1);
   const cogsPct = ((cogs / stats.rev) * 100).toFixed(1);
+  scrollIntoViewSmart(document.getElementById('rc-summary'));
   document.getElementById('rc-summary').innerHTML =
     `P&L · ${stats.orders} orders · $${stats.rev.toFixed(2)} revenue\n` +
     `COGS: $${cogs.toFixed(2)} (${cogsPct}%) — Fleisher's $${totalMeat.toFixed(2)} + R&S $${totalBread.toFixed(2)}\n` +
