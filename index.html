@@ -13,6 +13,34 @@
       --red:#A61D3D;--green:#22c55e;--amber:#D97706;--blue:#3B82F6;--purple:#7C3AED;
       color-scheme:light;
     }
+
+    /* ── Hero Overlay ── */
+    .hero-overlay{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s ease,visibility .8s ease}
+    .hero-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .hero-content{text-align:center;max-width:600px;padding:40px}
+    .hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--red);letter-spacing:.2em;text-transform:uppercase;margin-bottom:20px;opacity:0;animation:heroFade .8s ease .2s forwards}
+    .hero-title{font-family:'Instrument Serif',serif;font-size:48px;color:var(--cream);line-height:1.15;margin-bottom:16px;opacity:0;animation:heroFade .8s ease .5s forwards}
+    .hero-sub{font-family:'DM Sans',sans-serif;font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:12px;opacity:0;animation:heroFade .8s ease .8s forwards}
+    .hero-cascade{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cream);letter-spacing:.04em;opacity:0;animation:heroFade .8s ease 1.1s forwards;padding:14px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);margin:20px 0}
+    .hero-cascade .ha{color:var(--red)}
+    .hero-enter{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);background:var(--cream);border:none;padding:14px 40px;cursor:pointer;border-radius:6px;transition:all .25s;opacity:0;animation:heroFade .8s ease 1.5s forwards}
+    .hero-enter:hover{background:var(--red);color:var(--cream)}
+    .hero-tempo{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:24px;opacity:0;animation:heroFade .8s ease 1.8s forwards}
+    @keyframes heroFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── Mode Badge ── */
+    .mode-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid}
+    .mode-badge.live{color:var(--green);border-color:var(--green);animation:pulse 2s infinite}
+    .mode-badge.sim{color:var(--amber);border-color:var(--amber)}
+
+    /* ── Hop Counter ── */
+    .hop-counter{display:inline-flex;align-items:center;gap:3px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);margin-left:8px}
+    .hop-counter .hop-n{font-weight:700;font-size:12px}
+
+    /* ── Cascade card type badge ── */
+    .oc-type{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid}
+    .oc-type.delivery{color:var(--blue);border-color:var(--blue)}
+    .oc-type.pickup{color:var(--green);border-color:var(--green)}
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden;font-size:14px}
     ::-webkit-scrollbar{width:5px}
@@ -224,11 +252,25 @@
   </style>
 </head>
 <body>
+  <!-- ═══ HERO OVERLAY ═══ -->
+  <div class="hero-overlay" id="hero-overlay">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Tempo MPP Demo</div>
+      <div class="hero-title">What if agents could pay<br>other agents?</div>
+      <div class="hero-sub">One sandwich order. Seven autonomous payments across six independent services. No human approves anything. The agent runs the business.</div>
+      <div class="hero-cascade">
+        Customer <span class="ha">→</span> Kitchen <span class="ha">→</span> Fleisher's <span class="ha">→</span> Runner &amp; Stone <span class="ha">→</span> Laso Finance <span class="ha">→</span> DoorDash <span class="ha">→</span> StablePhone
+      </div>
+      <button class="hero-enter" onclick="dismissHero()">Enter the Kitchen</button>
+      <div class="hero-tempo">Powered by Tempo · USDC · Micropayment Protocol</div>
+    </div>
+  </div>
+
   <header>
     <div class="logo">
-      <div class="logo-mark">PB</div>
+      <div class="logo-mark">GK</div>
       <span class="logo-text">Ghost Kitchen</span>
-      <span class="logo-sub">Prospect Butcher Co</span>
+      <span class="logo-sub">Agents Paying Agents</span>
     </div>
     <div class="tabs">
       <div class="tab active" onclick="switchTab('customer')"><span class="tab-icon">🛒</span> Customer</div>
@@ -236,35 +278,36 @@
       <div class="tab" onclick="switchTab('operator')"><span class="tab-icon">◉</span> Operator</div>
     </div>
     <div class="header-right">
+      <span id="mode-badge" class="mode-badge sim">Simulated</span>
       <span class="hdr-badge"><span class="live-dot"></span>Brooklyn, NY</span>
-      <span class="hdr-badge">Fri Mar 20</span>
+      <span class="hdr-badge" id="hdr-hops">0 hops</span>
     </div>
   </header>
 
   <!-- Ticker -->
   <div class="ticker">
     <div class="ticker-inner">
-      <span class="ticker-text">Agentic B2B Payments</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Multi-Hop Payment Cascade</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Agents Paying Agents — No Human In The Loop</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">7 Autonomous Payments Per Order</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">Customer → Kitchen → Fleisher's → Runner & Stone → Laso → DoorDash → StablePhone</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Powered by Tempo MPP</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Real USDC Payments on Tempo Mainnet</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">USDC on Tempo via MPP</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Crypto → Virtual Visa → Legacy Rails</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">AI Phone Calls via StablePhone</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Fleisher's Craft Butchery · Park Slope</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Runner & Stone Bakery · Gowanus</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Virtual Debit Cards via Laso Finance</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Prospect Heights & Greenpoint</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">The Cook Just Makes The Sandwich</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Fleisher's · Park Slope</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Runner & Stone · Gowanus</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">EOD Auto-Reorder — Agent Restocks Overnight</span><span class="ticker-dot">◆</span>
       <!-- Duplicate for seamless loop -->
-      <span class="ticker-text">Agentic B2B Payments</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Multi-Hop Payment Cascade</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Agents Paying Agents — No Human In The Loop</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">7 Autonomous Payments Per Order</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">Customer → Kitchen → Fleisher's → Runner & Stone → Laso → DoorDash → StablePhone</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Powered by Tempo MPP</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Real USDC Payments on Tempo Mainnet</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">USDC on Tempo via MPP</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Crypto → Virtual Visa → Legacy Rails</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">AI Phone Calls via StablePhone</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Fleisher's Craft Butchery · Park Slope</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Runner & Stone Bakery · Gowanus</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Virtual Debit Cards via Laso Finance</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Prospect Heights & Greenpoint</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">The Cook Just Makes The Sandwich</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Fleisher's · Park Slope</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Runner & Stone · Gowanus</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">EOD Auto-Reorder — Agent Restocks Overnight</span><span class="ticker-dot">◆</span>
     </div>
   </div>
 
@@ -342,15 +385,14 @@
     </div>
     <div class="stats-bar">
       <div><div class="stat-label">Orders</div><div class="stat-val" id="s-orders">0</div></div>
+      <div><div class="stat-label">Total Hops</div><div class="stat-val" id="s-hops" style="color:var(--blue)">0</div></div>
       <div><div class="stat-label">Revenue</div><div class="stat-val" id="s-rev">$0</div></div>
-      <div><div class="stat-label">Suppliers (F+R&S)</div><div class="stat-val" id="s-cogs">$0</div></div>
-      <div><div class="stat-label">Delivery (Laso→DD)</div><div class="stat-val" id="s-del">$0</div></div>
+      <div><div class="stat-label">Suppliers</div><div class="stat-val" id="s-cogs">$0</div></div>
+      <div><div class="stat-label">Delivery</div><div class="stat-val" id="s-del">$0</div></div>
       <div><div class="stat-label">Comms</div><div class="stat-val" id="s-comms">$0</div></div>
       <div><div class="stat-label">Net Margin</div><div class="stat-val" id="s-margin" style="color:var(--green)">$0</div></div>
       <div style="flex:1"></div>
       <div id="eod-btn-wrap"></div>
-      <div><div class="stat-label">Prospect Heights</div><div class="stat-val" style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--cream)">665 Vanderbilt</div></div>
-      <div><div class="stat-label">Greenpoint</div><div class="stat-val" style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--cream)">113 Nassau</div></div>
     </div>
   </div>
 
@@ -406,7 +448,31 @@ const MENU = [
 ];
 
 let orders = [];
-let stats = {orders:0,rev:0,cogs:0,del:0,comms:0};
+let stats = {orders:0,rev:0,cogs:0,del:0,comms:0,hops:0};
+
+// ═══ HERO ═══
+function dismissHero() {
+  document.getElementById('hero-overlay').classList.add('hidden');
+}
+
+// ═══ MODE BADGE ═══
+function updateModeBadge() {
+  const badge = document.getElementById('mode-badge');
+  if (API !== null && API !== undefined) {
+    badge.className = 'mode-badge live';
+    badge.textContent = '● Live';
+  } else {
+    badge.className = 'mode-badge sim';
+    badge.textContent = 'Simulated';
+  }
+}
+
+// ═══ HOP TRACKING ═══
+function addHops(n) {
+  stats.hops += n;
+  document.getElementById('s-hops').textContent = stats.hops;
+  document.getElementById('hdr-hops').textContent = `${stats.hops} hops`;
+}
 const STATUS_LABELS = {
   confirmed:'Confirmed',dasher_assigned:'Dasher Assigned',dasher_at_store:'At Restaurant',
   picked_up:'Picked Up',approaching:'Approaching',delivered:'Delivered ✓',
@@ -432,7 +498,7 @@ let chatItem = null;
 function initChat() {
   const body = document.getElementById('chat-body');
   body.innerHTML = '';
-  addChatMsg('bot','Your Agent','Hey! I found <b>Prospect Butcher Co</b> — they do pickup & delivery in Brooklyn. I already read their <code>/llms.txt</code>. Want me to check the menu?');
+  addChatMsg('bot','Your Agent','Hey! I found <b>Prospect Butcher Co</b> in Brooklyn — they accept agent payments via MPP. I read their <code>/llms.txt</code> and can order, pay, arrange delivery, and get you a call when it\'s ready. No cards, no apps. Want me to check the menu?');
 }
 
 function addChatMsg(who, sender, text) {
@@ -575,6 +641,7 @@ async function advanceTicket(orderId, newStatus) {
       : `AI calling ${order.phone}: "Your ${order.item.name} is ready for pickup!"`;
     addTx(`${order.id} · Kitchen → StablePhone $${order.item.callCost.toFixed(2)} — ${callMsg}`, fakeHash());
     stats.comms += order.item.callCost;
+    addHops(1);
     updateStats();
 
     // Update cascade dot
@@ -754,7 +821,7 @@ async function placeOrder(itemId, source, type) {
   AGENTS.kitchen.balance+=item.price;flash('kitchen','in');renderWallets();
   addTx(`${oid} · ${customer} paid $${item.price}.00 for ${item.name} (${type})`,fakeHash());
   document.getElementById(`${oid}-d1`).className='pd done';
-  stats.orders++;stats.rev+=item.price;updateStats();
+  stats.orders++;stats.rev+=item.price;addHops(1);updateStats();
   await wait(400);
 
   // Step 2: Kitchen → Fleisher's
@@ -764,7 +831,7 @@ async function placeOrder(itemId, source, type) {
   flash('kitchen','out');flash('meat','in');renderWallets();
   addTx(`${oid} · Kitchen → Fleisher's $${item.meatCost.toFixed(2)}`,fakeHash());
   document.getElementById(`${oid}-d2`).className='pd done';
-  stats.cogs+=item.meatCost;updateStats();
+  stats.cogs+=item.meatCost;addHops(1);updateStats();
   await wait(300);
 
   // Step 3: Kitchen → Runner & Stone
@@ -774,7 +841,7 @@ async function placeOrder(itemId, source, type) {
   flash('kitchen','out');flash('bread','in');renderWallets();
   addTx(`${oid} · Kitchen → Runner & Stone $${item.breadCost.toFixed(2)}`,fakeHash());
   document.getElementById(`${oid}-d3`).className='pd done';
-  stats.cogs+=item.breadCost;updateStats();
+  stats.cogs+=item.breadCost;addHops(1);updateStats();
   await wait(300);
 
   if (isDelivery) {
@@ -785,7 +852,7 @@ async function placeOrder(itemId, source, type) {
     flash('kitchen','out');flash('laso','in');renderWallets();
     addTx(`${oid} · Kitchen → Laso Finance $${totalLaso.toFixed(2)} — requesting virtual card for delivery`,fakeHash());
     document.getElementById(`${oid}-d4a`).className='pd done';
-    stats.del+=item.lasoCost;updateStats();
+    stats.del+=item.lasoCost;addHops(1);updateStats();
     await wait(400);
 
     // Step 4b: Laso provisions virtual Visa card
@@ -796,6 +863,7 @@ async function placeOrder(itemId, source, type) {
     document.getElementById(`${oid}-card4`).textContent = cardLast4;
     addTx(`${oid} · Laso issued single-use Visa ****${cardLast4} — limit $${item.dashCost.toFixed(2)}`,fakeHash());
     document.getElementById(`${oid}-d4b`).className='pd done';
+    addHops(1);
     await wait(300);
 
     // Step 4c: Virtual card charges DoorDash Drive API
@@ -805,7 +873,7 @@ async function placeOrder(itemId, source, type) {
     flash('laso','out');flash('doordash','in');renderWallets();
     addTx(`${oid} · Visa ****${cardLast4} → DoorDash Drive $${item.dashCost.toFixed(2)} — delivery created`,fakeHash());
     document.getElementById(`${oid}-d4c`).className='pd done';
-    stats.del+=item.dashCost;updateStats();
+    stats.del+=item.dashCost;addHops(1);updateStats();
     await wait(400);
 
     // Step 5: Dasher dispatched
@@ -823,6 +891,7 @@ async function placeOrder(itemId, source, type) {
     document.getElementById(`${oid}-eta`).style.opacity = '1';
     addTx(`${oid} · Dasher ${dasherName} dispatched (${dasherVehicle}) — ETA ${etaMin} min`);
     document.getElementById(`${oid}-d5`).className='pd done';
+    addHops(1);
 
     order.delivery = {
       cardLast4, cardFull, dasherName, dasherVehicle, dasherRating, etaMin,
@@ -1045,6 +1114,7 @@ async function runEodReorder() {
   flash('kitchen','out'); flash('meat','in'); renderWallets();
   addTx(`${rid} · Kitchen → Fleisher's $${totalMeat.toFixed(2)} — ${reorders.length} protein items`, fakeHash());
   document.getElementById('rc-d1').className = 'reorder-dot done';
+  addHops(1);
   await wait(600);
 
   // Animate: Kitchen → Runner & Stone
@@ -1056,6 +1126,7 @@ async function runEodReorder() {
   flash('kitchen','out'); flash('bread','in'); renderWallets();
   addTx(`${rid} · Kitchen → Runner & Stone $${totalBread.toFixed(2)} — ciabatta × ${reorders.reduce((s,r)=>s+r.need,0)}`, fakeHash());
   document.getElementById('rc-d2').className = 'reorder-dot done';
+  addHops(1);
 
   // Restock items
   MENU.forEach(item => { item.stock = PAR_STOCK; });
@@ -1097,6 +1168,7 @@ initChat();
 renderMenu();
 renderWallets();
 updateStats();
+updateModeBadge();
 connectSSE();
 </script>
 </body>
