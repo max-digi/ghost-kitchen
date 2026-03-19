@@ -18,8 +18,8 @@ export const MENU = [
     price: 15,
     description: 'Smoked turkey breast, bacon jam, white American cheese, Duke\'s mayo, Crystal hot sauce, watercress on ciabatta',
     bom: [
-      { supplier: 'butcher', ingredient: 'smoked-turkey-bacon-jam', price: 5.50 },
-      { supplier: 'bakery',  ingredient: 'ciabatta-roll',           price: 1.20 },
+      { supplier: 'butcher', ingredient: 'smoked-turkey-bacon-jam', price: 1.80 },
+      { supplier: 'bakery',  ingredient: 'ciabatta-roll',           price: 0.22 },
     ],
   },
   {
@@ -28,8 +28,8 @@ export const MENU = [
     price: 15,
     description: 'Rare roast beef, Barber\'s aged cheddar, horseradish mayo, pickled green tomato, watercress on ciabatta',
     bom: [
-      { supplier: 'butcher', ingredient: 'rare-roast-beef', price: 6.00 },
-      { supplier: 'bakery',  ingredient: 'ciabatta-roll',   price: 1.20 },
+      { supplier: 'butcher', ingredient: 'rare-roast-beef', price: 2.20 },
+      { supplier: 'bakery',  ingredient: 'ciabatta-roll',   price: 0.22 },
     ],
   },
   {
@@ -38,8 +38,8 @@ export const MENU = [
     price: 14,
     description: 'Housemade chicken salad with dijon, Old Bay, Duke\'s mayo, watercress on ciabatta',
     bom: [
-      { supplier: 'butcher', ingredient: 'chicken-salad-mix', price: 4.00 },
-      { supplier: 'bakery',  ingredient: 'ciabatta-roll',     price: 1.20 },
+      { supplier: 'butcher', ingredient: 'chicken-salad-mix', price: 1.40 },
+      { supplier: 'bakery',  ingredient: 'ciabatta-roll',     price: 0.22 },
     ],
   },
   {
@@ -48,8 +48,8 @@ export const MENU = [
     price: 16,
     description: 'Gochujang beef, kimchi, pickled cucumbers on ciabatta with gochujang mayo',
     bom: [
-      { supplier: 'butcher', ingredient: 'gochujang-beef', price: 6.50 },
-      { supplier: 'bakery',  ingredient: 'ciabatta-roll',  price: 1.20 },
+      { supplier: 'butcher', ingredient: 'gochujang-beef', price: 2.50 },
+      { supplier: 'bakery',  ingredient: 'ciabatta-roll',  price: 0.22 },
     ],
   },
   {
@@ -58,8 +58,8 @@ export const MENU = [
     price: 16,
     description: 'Cajun boudin, pickled red onions & serranos, garlic aioli, watercress on ciabatta',
     bom: [
-      { supplier: 'butcher', ingredient: 'cajun-boudin',  price: 5.80 },
-      { supplier: 'bakery',  ingredient: 'ciabatta-roll', price: 1.20 },
+      { supplier: 'butcher', ingredient: 'cajun-boudin',  price: 2.00 },
+      { supplier: 'bakery',  ingredient: 'ciabatta-roll', price: 0.22 },
     ],
   },
   {
@@ -68,8 +68,8 @@ export const MENU = [
     price: 12,
     description: 'Smooth chopped liver, cornichons, brown mustard, watercress on ciabatta',
     bom: [
-      { supplier: 'butcher', ingredient: 'chopped-liver', price: 3.50 },
-      { supplier: 'bakery',  ingredient: 'ciabatta-roll', price: 1.20 },
+      { supplier: 'butcher', ingredient: 'chopped-liver', price: 1.10 },
+      { supplier: 'bakery',  ingredient: 'ciabatta-roll', price: 0.22 },
     ],
   },
   {
@@ -78,8 +78,8 @@ export const MENU = [
     price: 15,
     description: 'Ham, fig mostarda, gruyère, cornichons, Duke\'s mayo, watercress on ciabatta',
     bom: [
-      { supplier: 'butcher', ingredient: 'housemade-ham', price: 5.00 },
-      { supplier: 'bakery',  ingredient: 'ciabatta-roll', price: 1.20 },
+      { supplier: 'butcher', ingredient: 'housemade-ham', price: 1.60 },
+      { supplier: 'bakery',  ingredient: 'ciabatta-roll', price: 0.22 },
     ],
   },
   {
@@ -88,8 +88,8 @@ export const MENU = [
     price: 15,
     description: 'Rolled beef (roasted pastrami), deli mustard, cole slaw, swiss, watercress on ciabatta',
     bom: [
-      { supplier: 'butcher', ingredient: 'rolled-beef', price: 6.00 },
-      { supplier: 'bakery',  ingredient: 'ciabatta-roll', price: 1.20 },
+      { supplier: 'butcher', ingredient: 'rolled-beef', price: 2.20 },
+      { supplier: 'bakery',  ingredient: 'ciabatta-roll', price: 0.22 },
     ],
   },
 ]

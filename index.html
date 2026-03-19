@@ -277,7 +277,7 @@
       <div><div class="stat-label">Meat Used</div><div class="stat-val" id="s-meat" style="color:var(--amber)">$0</div></div>
       <div><div class="stat-label">Bread Used</div><div class="stat-val" id="s-bread" style="color:var(--amber)">$0</div></div>
       <div><div class="stat-label">Reorder Est.</div><div class="stat-val" id="s-reorder" style="color:var(--red)">$0</div></div>
-      <div><div class="stat-label">Net Margin</div><div class="stat-val" id="s-margin" style="color:var(--green)">$0</div></div>
+      <div><div class="stat-label">Gross Margin</div><div class="stat-val" id="s-margin" style="color:var(--green)">$0</div></div>
       <div style="flex:1"></div>
       <div id="eod-btn-wrap"></div>
     </div>
@@ -304,14 +304,14 @@ function connectSSE() {
 }
 
 const MENU = [
-  {id:'turkey-bacon-jam',name:'Turkey & Bacon Jam',price:15,meatCost:5.50,breadCost:1.20,stock:8,description:'Smoked turkey, bacon jam, American cheese on ciabatta'},
-  {id:'pbc-roast-beef',name:'PBC Roast Beef',price:15,meatCost:6.00,breadCost:1.20,stock:6,description:'Rare roast beef, aged cheddar, horseradish mayo on ciabatta'},
-  {id:'chicken-salad',name:'Chicken Salad',price:14,meatCost:4.00,breadCost:1.20,stock:10,description:'Housemade chicken salad with dijon & Old Bay on ciabatta'},
-  {id:'korean-bbq',name:'Korean BBQ',price:16,meatCost:6.50,breadCost:1.20,stock:5,description:'Gochujang beef, kimchi, pickled cucumbers on ciabatta'},
-  {id:'boudinwich',name:'Boudinwich',price:16,meatCost:5.80,breadCost:1.20,stock:4,description:'Cajun boudin, pickled onions, garlic aioli on ciabatta'},
-  {id:'chopped-liver',name:'Chopped Liver',price:12,meatCost:3.50,breadCost:1.20,stock:7,description:'Smooth chopped liver, cornichons, brown mustard on ciabatta'},
-  {id:'housemade-ham',name:'Housemade Ham',price:15,meatCost:5.00,breadCost:1.20,stock:6,description:'Ham, fig mostarda, gruyère, cornichons on ciabatta'},
-  {id:'rolled-beef',name:'Rolled Beef',price:15,meatCost:6.00,breadCost:1.20,stock:5,description:'Rolled beef (roasted pastrami), deli mustard, swiss on ciabatta'},
+  {id:'turkey-bacon-jam',name:'Turkey & Bacon Jam',price:15,meatCost:1.80,breadCost:0.22,stock:8,description:'Smoked turkey, bacon jam, American cheese on ciabatta'},
+  {id:'pbc-roast-beef',name:'PBC Roast Beef',price:15,meatCost:2.20,breadCost:0.22,stock:6,description:'Rare roast beef, aged cheddar, horseradish mayo on ciabatta'},
+  {id:'chicken-salad',name:'Chicken Salad',price:14,meatCost:1.40,breadCost:0.22,stock:10,description:'Housemade chicken salad with dijon & Old Bay on ciabatta'},
+  {id:'korean-bbq',name:'Korean BBQ',price:16,meatCost:2.50,breadCost:0.22,stock:5,description:'Gochujang beef, kimchi, pickled cucumbers on ciabatta'},
+  {id:'boudinwich',name:'Boudinwich',price:16,meatCost:2.00,breadCost:0.22,stock:4,description:'Cajun boudin, pickled onions, garlic aioli on ciabatta'},
+  {id:'chopped-liver',name:'Chopped Liver',price:12,meatCost:1.10,breadCost:0.22,stock:7,description:'Smooth chopped liver, cornichons, brown mustard on ciabatta'},
+  {id:'housemade-ham',name:'Housemade Ham',price:15,meatCost:1.60,breadCost:0.22,stock:6,description:'Ham, fig mostarda, gruyère, cornichons on ciabatta'},
+  {id:'rolled-beef',name:'Rolled Beef',price:15,meatCost:2.20,breadCost:0.22,stock:5,description:'Rolled beef (roasted pastrami), deli mustard, swiss on ciabatta'},
 ];
 
 let orders = [];
@@ -613,14 +613,24 @@ async function runEodReorder() {
   badge.style.color = 'var(--green)';
   badge.style.borderColor = 'var(--green)';
 
-  // Summary
-  const margin = stats.rev - grandTotal;
-  document.getElementById('rc-summary').innerHTML =
-    `Day closed · ${stats.orders} orders · $${stats.rev.toFixed(2)} revenue\n` +
-    `Reorder: $${grandTotal.toFixed(2)} (Fleisher's $${totalMeat.toFixed(2)} + R&S $${totalBread.toFixed(2)})\n` +
-    `All items restocked to ${PAR_STOCK} · Net margin: $${margin.toFixed(2)}`;
+  // Supplier confirmations
+  await wait(600);
+  addTx(`📦 Fleisher's confirmed — delivery tomorrow 6:00 AM · ${reorders.length} protein items`);
+  await wait(400);
+  addTx(`📦 Runner & Stone confirmed — delivery tomorrow 5:30 AM · ${totalBreadQty} ciabatta rolls`);
 
-  document.getElementById('eod-btn-wrap').innerHTML = `<span style="font-size:10px;color:var(--green);letter-spacing:.1em;text-transform:uppercase">✓ Day closed · Suppliers paid</span>`;
+  // P&L summary
+  const cogs = grandTotal;
+  const margin = stats.rev - cogs;
+  const marginPct = ((margin / stats.rev) * 100).toFixed(1);
+  const cogsPct = ((cogs / stats.rev) * 100).toFixed(1);
+  document.getElementById('rc-summary').innerHTML =
+    `P&L · ${stats.orders} orders · $${stats.rev.toFixed(2)} revenue\n` +
+    `COGS: $${cogs.toFixed(2)} (${cogsPct}%) — Fleisher's $${totalMeat.toFixed(2)} + R&S $${totalBread.toFixed(2)}\n` +
+    `Gross margin: $${margin.toFixed(2)} (${marginPct}%)\n` +
+    `Delivery: Fleisher's 6:00 AM · R&S 5:30 AM`;
+
+  document.getElementById('eod-btn-wrap').innerHTML = `<span style="font-size:10px;color:var(--green);letter-spacing:.1em;text-transform:uppercase">✓ Day closed · Suppliers paid · Delivery confirmed</span>`;
 
   addTx(`🤖 Agent: Day closed. ${reorders.length} items restocked to par. Total: $${grandTotal.toFixed(2)} paid via Tempo MPP.`);
 
