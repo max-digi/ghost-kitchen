@@ -1,7 +1,7 @@
 {
   "name": "ghost-kitchen",
   "version": "1.0.0",
-  "description": "Ghost Kitchen — Agentic B2B payments demo with multi-hop MPP cascades, virtual debit cards, DoorDash delivery, and AI phone calls. Powered by Tempo.",
+  "description": "Ghost Kitchen — Merchant dashboard for autonomous B2B supplier payments via Tempo MPP. Agent tracks ingredient usage and auto-reorders at EOD.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,7 +15,6 @@
   "dependencies": {
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
     "mppx": "^0.4.7"
   }
 }

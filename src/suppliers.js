@@ -7,7 +7,6 @@
 import express from 'express'
 import { Mppx, tempo } from 'mppx/express'
 import { USDC_TOKEN, WALLET } from './menu.js'
-import { startLaso } from './laso.js'
 
 const CATALOG = {
   butcher: {
@@ -77,7 +76,4 @@ export function startSuppliers() {
       console.log(`  [supplier:${key}] :${port}`)
     })
   }
-
-  // Start Laso Finance virtual card bridge
-  startLaso()
 }
