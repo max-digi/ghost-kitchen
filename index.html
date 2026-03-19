@@ -189,13 +189,13 @@
       <div class="hero-scenario">
         You run a sandwich shop. Every order uses ingredients from two suppliers — <strong>Fleisher's</strong> for protein and <strong>Runner &amp; Stone</strong> for bread.
         Today, an AI agent watches every sandwich you sell and tallies what you used.
-        At closing time, it calculates exactly what to reorder, pays both suppliers automatically in USDC, and restocks your kitchen — <strong>no spreadsheets, no invoices, no phone calls.</strong>
+        At closing time, it calculates exactly what to reorder and pays both suppliers automatically — they receive USD, settled instantly in USDC on Tempo. <strong>No spreadsheets, no invoices, no phone calls.</strong>
       </div>
       <div class="hero-steps">
         <div class="hero-step"><div class="hero-step-n">01</div><div class="hero-step-label">Orders come in</div><div class="hero-step-sub">All day</div></div>
         <div class="hero-step"><div class="hero-step-n">02</div><div class="hero-step-label">Agent tracks usage</div><div class="hero-step-sub">Per ingredient</div></div>
         <div class="hero-step"><div class="hero-step-n">03</div><div class="hero-step-label">Day closes</div><div class="hero-step-sub">Agent takes over</div></div>
-        <div class="hero-step"><div class="hero-step-n">04</div><div class="hero-step-label">Pays suppliers</div><div class="hero-step-sub">USDC via Tempo</div></div>
+        <div class="hero-step"><div class="hero-step-n">04</div><div class="hero-step-label">Pays suppliers</div><div class="hero-step-sub">They receive USD</div></div>
       </div>
       <div class="hero-btns">
         <button class="hero-enter" onclick="dismissHero(); startAutoDemo();">▶ Watch the Demo</button>
@@ -359,7 +359,7 @@ function renderMenu() {
 function renderWallets() {
   const el = document.getElementById('op-wallets');
   el.innerHTML = Object.entries(AGENTS).map(([k,a])=>`
-    <div class="w" id="w-${k}"><div class="w-top"><span class="w-name">${a.name}</span><span class="w-role">${a.role}</span></div><div class="w-addr">${a.addr}</div><span class="w-bal">$${a.balance.toFixed(2)}</span><span class="w-cur">USDC on Tempo</span></div>
+    <div class="w" id="w-${k}"><div class="w-top"><span class="w-name">${a.name}</span><span class="w-role">${a.role}</span></div><div class="w-addr">${a.addr}</div><span class="w-bal">$${a.balance.toFixed(2)}</span><span class="w-cur">${k==='kitchen'?'USDC on Tempo':'USD via Tempo'}</span></div>
   `).join('');
 }
 
@@ -692,7 +692,7 @@ async function startAutoDemo() {
   narrate('Step 2 · Day Closes', 'All orders are in. Now the agent scans inventory against par stock and calculates what to reorder. Watch the bottom bar →', 5500);
   await wait(5800);
 
-  narrate('Step 3 · Auto-Reorder', 'The agent pays Fleisher\'s for protein and Runner & Stone for bread — two USDC payments via Tempo, no human involved.', 5500);
+  narrate('Step 3 · Auto-Reorder', 'The agent pays Fleisher\'s for protein and Runner & Stone for bread — they receive USD, settled via Tempo. No human involved.', 5500);
   await wait(1200);
 
   await runEodReorder();
