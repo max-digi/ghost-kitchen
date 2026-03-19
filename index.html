@@ -231,6 +231,14 @@
     /* Code inline */
     code{font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(26,26,24,.05);padding:2px 5px;border-radius:3px}
 
+    /* Verified badge */
+    .verified-badge{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);border:1px solid var(--green);padding:3px 8px;border-radius:4px;margin-top:8px;animation:slideIn .3s ease}
+    .verified-badge .v-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+    .verified-link{color:var(--green);text-decoration:none;transition:color .2s}
+    .verified-link:hover{color:var(--cream)}
+    .cascade-proof{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:6px;padding:6px 8px;background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.15);border-radius:4px;animation:slideIn .3s ease}
+    .cascade-proof a{color:var(--green);text-decoration:none}
+
     /* EOD reorder */
     .eod-btn{background:var(--cream);color:var(--ink);border:none;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:5px;transition:all .25s;animation:slideIn .3s ease}
     .eod-btn:hover{background:var(--red);color:var(--cream)}
@@ -257,7 +265,7 @@
     <div class="hero-content">
       <div class="hero-eyebrow">Tempo MPP Demo</div>
       <div class="hero-title">What if agents could pay<br>other agents?</div>
-      <div class="hero-sub">One sandwich order. Seven autonomous payments across six independent services. No human approves anything. The agent runs the business.</div>
+      <div class="hero-sub">One sandwich order. Seven autonomous payments across six independent services.<br>No human approves anything. The agent runs the business.</div>
       <div class="hero-cascade">
         Customer <span class="ha">→</span> Kitchen <span class="ha">→</span> Fleisher's <span class="ha">→</span> Runner &amp; Stone <span class="ha">→</span> Laso Finance <span class="ha">→</span> DoorDash <span class="ha">→</span> StablePhone
       </div>
@@ -421,17 +429,51 @@ function connectSSE() {
   sse.addEventListener('order_update', (e) => {
     const data = JSON.parse(e.data);
     console.log('[SSE] update:', data);
-    // Update order status in UI if it exists
     const order = orders.find(o => o.serverId === data.id);
-    if (order && data.status) {
-      if (data.status === 'called' || data.status === 'ready') {
-        // Server triggered StablePhone - update UI
+    if (!order) return;
+
+    // Real StablePhone call completed — show verified badge
+    if (data.status === 'called' && data.call && data.call.id) {
+      const cascadeEl = document.getElementById(`o-${order.id}`);
+      if (cascadeEl && !cascadeEl.querySelector('.cascade-proof')) {
+        cascadeEl.querySelector('.cascade')?.insertAdjacentHTML('afterend', `
+          <div class="cascade-proof">
+            <span class="v-dot" style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;margin-right:4px"></span>
+            StablePhone call verified · <a href="https://stablephone.dev/call/${data.call.id}" target="_blank">${data.call.id}</a>
+            · paid $0.54 USDC via MPP on Tempo
+          </div>
+        `);
+      }
+      addTx(`${order.id} · ✓ REAL StablePhone call verified: ${data.call.id} — $0.54 USDC via MPP`, null);
+    }
+
+    // Delivery status updates from backend
+    if (data.delivery && order.delivery) {
+      const newStatus = data.delivery.status || data.status;
+      if (newStatus && order.delivery.status !== newStatus) {
+        order.delivery.status = newStatus;
+        order.delivery.statusIdx = order.delivery.statuses.indexOf(newStatus);
+        if (order.delivery.statusIdx < 0) order.delivery.statusIdx = order.delivery.statuses.length - 1;
+        renderDeliveryTracker(order.id, order);
+        updateCustDelivery();
       }
     }
   });
   sse.addEventListener('delivery_update', (e) => {
     const data = JSON.parse(e.data);
     console.log('[SSE] delivery:', data);
+    const order = orders.find(o => o.serverId === data.id);
+    if (!order || !order.delivery) return;
+
+    if (data.status && order.delivery.status !== data.status) {
+      order.delivery.status = data.status;
+      order.delivery.statusIdx = order.delivery.statuses.indexOf(data.status);
+      if (order.delivery.statusIdx < 0) order.delivery.statusIdx = order.delivery.statuses.length - 1;
+      renderDeliveryTracker(order.id, order);
+      updateCustDelivery();
+      renderCookView();
+      addTx(`${order.id} · 🚗 Backend delivery: ${STATUS_LABELS[data.status] || data.status}`);
+    }
   });
   sse.onerror = () => console.warn('[SSE] connection lost, reconnecting...');
 }
@@ -498,7 +540,7 @@ let chatItem = null;
 function initChat() {
   const body = document.getElementById('chat-body');
   body.innerHTML = '';
-  addChatMsg('bot','Your Agent','Hey! I found <b>Prospect Butcher Co</b> in Brooklyn — they accept agent payments via MPP. I read their <code>/llms.txt</code> and can order, pay, arrange delivery, and get you a call when it\'s ready. No cards, no apps. Want me to check the menu?');
+  addChatMsg('bot','Your Agent','Hey! I crawled <b>Prospect Butcher Co</b>\'s <code>/llms.txt</code> — they\'re a sandwich shop in Brooklyn that accepts <b>agent-to-agent payments via MPP</b>. I can order, pay their suppliers, arrange a DoorDash delivery with a virtual Visa card, and have an AI call you when it\'s ready. Seven autonomous payments, zero human approvals. Want me to check the menu?');
 }
 
 function addChatMsg(who, sender, text) {
@@ -536,7 +578,7 @@ async function sendChat() {
     input.value = '';
     await wait(800);
     const menuList = MENU.filter(m=>m.stock>0).map(m=>`• <b>${m.name}</b> — <span style="color:var(--red);font-family:JetBrains Mono,monospace">$${m.price}.00</span>`).join('<br>');
-    addChatMsg('bot','Your Agent',`I hit their <code>GET /menu</code> endpoint via MPP. Here's what's available today:<br><br>${menuList}<br><br>What sounds good? I'll need your <b>name</b> and <b>phone number</b> for the order.`);
+    addChatMsg('bot','Your Agent',`I hit their <code>GET /menu</code> endpoint via MPP (paid with USDC on Tempo). Here's what's available today:<br><br>${menuList}<br><br>What sounds good? Just tell me and I'll handle everything.`);
     chatStep = 1;
   } else if (chatStep === 1) {
     addChatMsg('user','You', val);
@@ -665,8 +707,21 @@ async function advanceTicket(orderId, newStatus) {
         .then(r => r.json())
         .then(data => {
           console.log('[API] StablePhone call:', data);
-          if (data.call && data.call.id) {
-            addTx(`${order.id} · 📞 Real StablePhone call: ${data.call.id}`);
+          if (data.call && data.call.id && !data.simulated) {
+            // Real payment went through! Show proof on cascade card
+            const cascadeEl = document.getElementById(`o-${order.id}`);
+            if (cascadeEl && !cascadeEl.querySelector('.cascade-proof')) {
+              cascadeEl.querySelector('.cascade')?.insertAdjacentHTML('afterend', `
+                <div class="cascade-proof">
+                  <span class="v-dot" style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;margin-right:4px"></span>
+                  ✓ Verified on Tempo · StablePhone call <a href="https://stablephone.dev/call/${data.call.id}" target="_blank">${data.call.id}</a>
+                  · $0.54 USDC via MPP
+                </div>
+              `);
+            }
+            addTx(`${order.id} · ✓ VERIFIED: StablePhone call ${data.call.id} — real $0.54 USDC payment via Tempo MPP`);
+          } else if (data.simulated) {
+            addTx(`${order.id} · ⚠ StablePhone call simulated (wallet insufficient or service unavailable)`);
           }
         })
         .catch(err => console.warn('[API] ready call failed:', err));
@@ -715,7 +770,7 @@ function renderWallets() {
   `).join('');
 }
 
-function flash(agent,type){const el=document.getElementById(`w-${agent}`);if(!el)return;el.classList.add(`flash-${type}`);setTimeout(()=>el.classList.remove(`flash-${type}`),900)}
+function flash(agent,type){const el=document.getElementById(`w-${agent}`);if(!el)return;el.classList.add(`flash-${type}`);setTimeout(()=>el.classList.remove(`flash-${type}`),900);paySound(type)}
 
 function addTx(desc,hash){
   const log=document.getElementById('op-txlog');
@@ -738,6 +793,24 @@ function updateStats(){
 
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 function fakeHash(){const h='0123456789abcdef';let s='0x';for(let i=0;i<64;i++)s+=h[Math.floor(Math.random()*16)];return s}
+
+// ═══ PAYMENT SOUND ═══
+let audioCtx = null;
+function paySound(type) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    if (type === 'in') { osc.frequency.value = 880; gain.gain.value = 0.06; }
+    else if (type === 'out') { osc.frequency.value = 440; gain.gain.value = 0.04; }
+    else if (type === 'done') { osc.frequency.value = 1320; gain.gain.value = 0.05; }
+    else { osc.frequency.value = 660; gain.gain.value = 0.03; }
+    osc.type = 'sine';
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.15);
+  } catch(e) {}
+}
 
 // ═══ CUSTOMER ORDER SIDEBAR ═══
 function updateCustOrder() {
