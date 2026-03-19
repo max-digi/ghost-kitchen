@@ -270,11 +270,11 @@
 
       /* Wallets — horizontal scroll row */
       .op-col:nth-child(3){order:2}
-      .op-col:nth-child(3) .col-hdr:last-of-type,
-      .op-col:nth-child(3) .r-section:last-of-type,
-      .op-col:nth-child(3)>div[style*="border-top"]{display:none}
-      .op-col:nth-child(3) .r-section:first-of-type{display:flex;gap:8px;overflow-x:auto;padding:8px 12px;-webkit-overflow-scrolling:touch}
-      .w{flex:0 0 160px;margin-bottom:0;padding:10px 12px}
+      .op-col:nth-child(3) .col-hdr:not(:first-child),
+      #op-txlog,
+      .op-col:nth-child(3)>div[style*="border-top"]{display:none!important}
+      #op-wallets{display:flex!important;gap:8px;overflow-x:auto;padding:8px 12px;-webkit-overflow-scrolling:touch}
+      #op-wallets .w{flex:0 0 160px;margin-bottom:0;padding:10px 12px}
       .w-name{font-size:10px}
       .w-bal{font-size:20px}
       .w-addr{font-size:8px}
