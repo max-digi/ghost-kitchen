@@ -523,27 +523,58 @@ function maybeShowEodBtn() {
   wrap.innerHTML = `<button class="eod-btn" onclick="runEodReorder()">☽ Close Day & Auto-Reorder</button>`;
 }
 
+// Weather scenarios for demand forecasting
+const WEATHER_SCENARIOS = [
+  {temp:84,desc:'Sunny & hot',icon:'☀️',adj:[{slug:'chicken-salad',bump:3},{slug:'chopped-liver',bump:2}],reason:'Light/cold sandwiches in demand'},
+  {temp:38,desc:'Cold & blustery',icon:'🌨️',adj:[{slug:'korean-bbq',bump:3},{slug:'rolled-beef',bump:2},{slug:'boudinwich',bump:2}],reason:'Hearty sandwiches for cold weather'},
+  {temp:72,desc:'Partly cloudy',icon:'⛅',adj:[],reason:'Mild weather — standard par levels'},
+  {temp:91,desc:'Heat advisory',icon:'🔥',adj:[{slug:'chicken-salad',bump:4},{slug:'chopped-liver',bump:3}],reason:'Extreme heat — heavy cold sandwich demand'},
+];
+
 async function runEodReorder() {
   if (eodTriggered) return;
   eodTriggered = true;
   document.getElementById('eod-btn-wrap').innerHTML = `<span style="font-size:10px;color:var(--cream);letter-spacing:.1em;text-transform:uppercase">Agent reordering…</span>`;
 
-  // Calculate what needs restocking to par
+  // ── STEP 0: Weather-based demand forecast ──
+  const wx = WEATHER_SCENARIOS[Math.floor(Math.random() * WEATHER_SCENARIOS.length)];
+  addTx(`🌡️ Agent: Checking tomorrow's forecast via OpenWeather (MPP $0.003)…`);
+  await wait(1000);
+  addTx(`🌡️ Forecast: ${wx.temp}°F ${wx.desc} ${wx.icon} — ${wx.reason}`);
+  AGENTS.kitchen.balance -= 0.003;
+  renderWallets();
+
+  // Adjust par stock based on weather
+  let parAdjustments = {};
+  wx.adj.forEach(a => {
+    const item = MENU.find(m => m.id === a.slug);
+    if (item) parAdjustments[item.name] = a.bump;
+  });
+
+  // Calculate what needs restocking to par (with weather adjustments)
   const reorders = [];
   let totalMeat = 0, totalBread = 0;
   MENU.forEach(item => {
-    const need = PAR_STOCK - item.stock;
+    const weatherBump = parAdjustments[item.name] || 0;
+    const targetPar = PAR_STOCK + weatherBump;
+    const need = targetPar - item.stock;
     if (need > 0) {
       const meatTotal = +(item.meatCost * need).toFixed(2);
       const breadTotal = +(item.breadCost * need).toFixed(2);
       totalMeat += meatTotal;
       totalBread += breadTotal;
-      reorders.push({ name: item.name, need, meatUnit: item.meatCost, breadUnit: item.breadCost, meatTotal, breadTotal });
+      reorders.push({ name: item.name, need, meatUnit: item.meatCost, breadUnit: item.breadCost, meatTotal, breadTotal, weatherBump });
     }
   });
   totalMeat = +totalMeat.toFixed(2);
   totalBread = +totalBread.toFixed(2);
   const grandTotal = +(totalMeat + totalBread).toFixed(2);
+
+  if (wx.adj.length > 0) {
+    const bumpNames = wx.adj.map(a => MENU.find(m=>m.id===a.slug)?.name).filter(Boolean);
+    addTx(`🌡️ Agent adjusted par stock: ${bumpNames.join(', ')} bumped for ${wx.desc.toLowerCase()}`);
+  }
+  await wait(800);
 
   if (reorders.length === 0) {
     addTx('🤖 Agent: All items at par stock — no reorder needed');
@@ -554,9 +585,10 @@ async function runEodReorder() {
   // Build reorder card
   const ordersEl = document.getElementById('op-orders');
   const rid = 'REORDER-' + new Date().toISOString().slice(5,10);
-  const fleisherLines = reorders.map(r => `
-    <div class="reorder-line"><span>${r.name} × ${r.need}</span><span class="pamt" style="color:var(--red)">$${r.meatTotal.toFixed(2)}</span></div>
-  `).join('');
+  const fleisherLines = reorders.map(r => {
+    const bump = r.weatherBump ? ` <span style="color:var(--blue);font-size:9px">+${r.weatherBump} ${wx.icon}</span>` : '';
+    return `<div class="reorder-line"><span>${r.name} × ${r.need}${bump}</span><span class="pamt" style="color:var(--red)">$${r.meatTotal.toFixed(2)}</span></div>`;
+  }).join('');
   const totalBreadQty = reorders.reduce((s,r)=>s+r.need,0);
   const runnerLines = `<div class="reorder-line"><span>Ciabatta rolls × ${totalBreadQty}</span><span class="pamt" style="color:var(--red)">$${totalBread.toFixed(2)}</span></div>`;
 
@@ -566,13 +598,16 @@ async function runEodReorder() {
         <div class="reorder-title">🤖 Agent Auto-Reorder</div>
         <span class="reorder-badge" id="rc-badge" style="color:var(--blue);border-color:var(--blue)">Processing</span>
       </div>
+      <div style="font-size:10px;color:var(--muted);margin-bottom:10px;font-family:'JetBrains Mono',monospace">${wx.icon} ${wx.temp}°F ${wx.desc} — ${wx.reason}</div>
       <div class="reorder-supplier">Fleisher's · Park Slope — Protein</div>
       ${fleisherLines}
       <div class="reorder-supplier">Runner & Stone · Gowanus — Ciabatta</div>
       ${runnerLines}
       <div class="reorder-cascade" id="rc-cascade">
+        <div class="reorder-step" id="rc-s0"><span class="reorder-dot done" id="rc-d0"></span>Weather forecast checked<span class="pamt">$0.003</span></div>
         <div class="reorder-step" id="rc-s1"><span class="reorder-dot pending" id="rc-d1"></span>Kitchen → Fleisher's<span class="pamt">$${totalMeat.toFixed(2)}</span></div>
         <div class="reorder-step" id="rc-s2"><span class="reorder-dot pending" id="rc-d2"></span>Kitchen → Runner & Stone<span class="pamt">$${totalBread.toFixed(2)}</span></div>
+        <div class="reorder-step" id="rc-s3"><span class="reorder-dot pending" id="rc-d3"></span>Generate daily special image<span class="pamt">$0.035</span></div>
       </div>
       <div class="reorder-summary" id="rc-summary"></div>
     </div>
@@ -581,10 +616,10 @@ async function runEodReorder() {
   // Scroll to reorder card
   document.getElementById(`rc-${rid}`).scrollIntoView({behavior:'smooth',block:'center'});
 
-  addTx(`🤖 Agent closing day — scanning ${MENU.length} items against par stock (${PAR_STOCK})`);
+  addTx(`🤖 Agent closing day — scanning ${MENU.length} items against par stock (${PAR_STOCK}) with weather adjustments`);
   await wait(800);
 
-  // Animate: Kitchen → Fleisher's (REAL payment)
+  // Animate: Kitchen → Fleisher's
   document.getElementById('rc-d1').className = 'reorder-dot running';
   addTx(`🤖 Agent: ${reorders.length} items below par — ordering protein from Fleisher's`);
   await wait(1200);
@@ -595,18 +630,50 @@ async function runEodReorder() {
   document.getElementById('rc-d1').className = 'reorder-dot done';
   await wait(800);
 
-  // Animate: Kitchen → Runner & Stone (REAL payment)
+  // Animate: Kitchen → Runner & Stone
   document.getElementById('rc-d2').className = 'reorder-dot running';
   addTx(`🤖 Agent: ordering ciabatta from Runner & Stone for tomorrow`);
   await wait(1000);
   AGENTS.kitchen.balance -= totalBread;
   AGENTS.bread.balance += totalBread;
   flash('kitchen','out'); flash('bread','in'); renderWallets();
-  addTx(`${rid} · Kitchen → Runner & Stone $${totalBread.toFixed(2)} — ciabatta × ${reorders.reduce((s,r)=>s+r.need,0)} via MPP`, fakeHash());
+  addTx(`${rid} · Kitchen → Runner & Stone $${totalBread.toFixed(2)} — ciabatta × ${totalBreadQty} via MPP`, fakeHash());
   document.getElementById('rc-d2').className = 'reorder-dot done';
+  await wait(800);
 
-  // Restock items
-  MENU.forEach(item => { item.stock = PAR_STOCK; });
+  // ── STEP 3: Generate daily special image via Stability AI ──
+  document.getElementById('rc-d3').className = 'reorder-dot running';
+  // Pick top seller
+  const topSeller = Object.entries(usage).sort((a,b) => b[1].count - a[1].count)[0];
+  const specialName = topSeller ? topSeller[0] : MENU[0].name;
+  addTx(`🎨 Agent: Generating hero image for tomorrow's special — "${specialName}" via Stability AI (MPP $0.035)…`);
+  await wait(1800);
+  AGENTS.kitchen.balance -= 0.035;
+  renderWallets();
+  addTx(`🎨 Daily special image generated — "${specialName}" pushed to digital menu board`);
+  document.getElementById('rc-d3').className = 'reorder-dot done';
+
+  // Show the daily special card
+  const cascade = document.getElementById('rc-cascade');
+  cascade.insertAdjacentHTML('afterend', `
+    <div style="margin-top:14px;padding:14px;background:linear-gradient(135deg,#2a1a0e,#1a1a18);border:1px solid rgba(166,29,61,.25);border-radius:8px;animation:slideIn .4s ease">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red)">Tomorrow's Special</span>
+        <span style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace">Digital Menu Board</span>
+      </div>
+      <div style="font-family:'Instrument Serif',serif;font-size:20px;color:var(--cream);margin-bottom:4px">${specialName}</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.5;margin-bottom:8px">Best seller today · ${topSeller ? topSeller[1].count : 0} sold · AI-generated hero image</div>
+      <div style="height:64px;border-radius:6px;background:linear-gradient(135deg,#3a2a1a 0%,#2a1510 40%,#1a1a18 100%);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.05)">
+        <span style="font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">🖼️ Hero image · Stability AI via MPP</span>
+      </div>
+    </div>
+  `);
+
+  // Restock items (with weather adjustments)
+  MENU.forEach(item => {
+    const bump = parAdjustments[item.name] || 0;
+    item.stock = PAR_STOCK + bump;
+  });
   renderMenu();
 
   // Update badge
@@ -622,19 +689,21 @@ async function runEodReorder() {
   addTx(`📦 Runner & Stone confirmed — delivery tomorrow 5:30 AM · ${totalBreadQty} ciabatta rolls`);
 
   // P&L summary
-  const cogs = grandTotal;
+  const serviceCosts = 0.038; // weather + image
+  const cogs = grandTotal + serviceCosts;
   const margin = stats.rev - cogs;
   const marginPct = ((margin / stats.rev) * 100).toFixed(1);
   const cogsPct = ((cogs / stats.rev) * 100).toFixed(1);
   document.getElementById('rc-summary').innerHTML =
     `P&L · ${stats.orders} orders · $${stats.rev.toFixed(2)} revenue\n` +
     `COGS: $${cogs.toFixed(2)} (${cogsPct}%) — Fleisher's $${totalMeat.toFixed(2)} + R&S $${totalBread.toFixed(2)}\n` +
+    `MPP services: $${serviceCosts.toFixed(3)} (weather + menu image)\n` +
     `Gross margin: $${margin.toFixed(2)} (${marginPct}%)\n` +
     `Delivery: Fleisher's 6:00 AM · R&S 5:30 AM`;
 
-  document.getElementById('eod-btn-wrap').innerHTML = `<span style="font-size:10px;color:var(--green);letter-spacing:.1em;text-transform:uppercase">✓ Day closed · Suppliers paid · Delivery confirmed</span>`;
+  document.getElementById('eod-btn-wrap').innerHTML = `<span style="font-size:10px;color:var(--green);letter-spacing:.1em;text-transform:uppercase">✓ Day closed · Suppliers paid · Menu updated</span>`;
 
-  addTx(`🤖 Agent: Day closed. ${reorders.length} items restocked to par. Total: $${grandTotal.toFixed(2)} paid via Tempo MPP.`);
+  addTx(`🤖 Agent: Day closed. ${reorders.length} items restocked. $${grandTotal.toFixed(2)} suppliers + $${serviceCosts.toFixed(3)} MPP services.`);
 
   if (API !== null) {
     fetch('/kitchen/restock', { method: 'POST' })
@@ -691,16 +760,16 @@ async function startAutoDemo() {
   }
 
   await wait(1500);
-  narrate('Step 2 · Day Closes', 'All orders are in. Now the agent scans inventory against par stock and calculates what to reorder. Watch the bottom bar →', 5500);
+  narrate('Step 2 · Day Closes', 'All orders are in. Now the agent checks tomorrow\'s weather forecast via MPP, adjusts stock levels, and calculates the reorder.', 5500);
   await wait(5800);
 
-  narrate('Step 3 · Auto-Reorder', 'The agent pays Fleisher\'s for protein and Runner & Stone for bread — they receive USD, settled via Tempo. No human involved.', 5500);
+  narrate('Step 3 · Smart Reorder', 'Weather-adjusted ordering — the agent pays suppliers and generates a daily special image for the digital menu. All via MPP services.', 5500);
   await wait(1200);
 
   await runEodReorder();
 
   await wait(2000);
-  narrate('Done', 'Suppliers paid. Kitchen restocked. The merchant opens tomorrow fully stocked — no spreadsheets, no invoices, no phone calls.', 6000);
+  narrate('Done', 'Suppliers paid. Menu updated. Kitchen restocked with weather-smart par levels. Four MPP services, zero human involvement.', 6000);
 }
 
 // ═══ INIT ═══
