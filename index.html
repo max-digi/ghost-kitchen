@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Ghost Kitchen — Autonomous Supplier Payments</title>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -323,17 +323,15 @@
       .usage-row{font-size:11px}
 
       /* Stats bar — compact 3×2 grid */
-      .stats-bar{display:grid!important;grid-template-columns:repeat(3,1fr);gap:0;padding:6px 10px}
+      .stats-bar{display:grid!important;grid-template-columns:repeat(3,1fr);gap:0;padding:6px 10px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px))}
       .stats-bar>div{text-align:center;padding:3px 4px}
       .stats-bar>div[style*="flex:1"]{display:none}
       .stats-bar>div:last-child{grid-column:1/-1;text-align:center;padding:4px 0 2px}
       .stat-label{font-size:7px;letter-spacing:.08em}
       .stat-val{font-size:13px}
 
-      /* Narration — top position on mobile */
-      .narration{max-width:92vw;font-size:11px;bottom:auto;top:52px;left:50%;padding:10px 14px 10px 12px;border-radius:10px;line-height:1.5;gap:10px}
-      .narration .n-step{font-size:8px}
-      .narration .n-text{font-size:11px}
+      /* Narration — hide on mobile, overlaps content */
+      .narration{display:none!important}
 
       /* Flow empty */
       .flow-empty{min-height:120px}
