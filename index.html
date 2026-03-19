@@ -360,7 +360,7 @@
         <div class="hero-step"><div class="hero-step-n">04</div><div class="hero-step-label">Pays suppliers</div><div class="hero-step-sub">They receive USD</div></div>
       </div>
       <div class="hero-btns">
-        <button class="hero-enter" onclick="dismissHero(); startAutoDemo();">▶ Watch the Demo</button>
+        <button class="hero-enter" onclick="dismissHero(); startAutoDemo();">Watch the Demo</button>
         <button class="hero-enter secondary" onclick="dismissHero()">Explore Manually</button>
       </div>
       <div class="hero-tempo">Built on Tempo · USDC · Micropayment Protocol</div>
@@ -398,7 +398,7 @@
       <span class="ticker-text">Fleisher's · Craft Butchery · Park Slope</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">Runner & Stone · Artisan Bakery · Gowanus</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">The Cook Just Makes The Sandwich</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Your Agent Cooks Too 🍳</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Your Agent Cooks Too</span><span class="ticker-dot">◆</span>
       <!-- Duplicate for seamless loop -->
       <span class="ticker-text">Agent Tracks Every Ingredient — Auto-Reorders at Close</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">No Spreadsheets · No Invoices · No Human Approvals</span><span class="ticker-dot">◆</span>
@@ -407,7 +407,7 @@
       <span class="ticker-text">Fleisher's · Craft Butchery · Park Slope</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">Runner & Stone · Artisan Bakery · Gowanus</span><span class="ticker-dot">◆</span>
       <span class="ticker-text">The Cook Just Makes The Sandwich</span><span class="ticker-dot">◆</span>
-      <span class="ticker-text">Your Agent Cooks Too 🍳</span><span class="ticker-dot">◆</span>
+      <span class="ticker-text">Your Agent Cooks Too</span><span class="ticker-dot">◆</span>
     </div>
   </div>
 
@@ -587,7 +587,7 @@ function renderUsageTracker() {
   const grand = totalMeat + totalBread;
   el.innerHTML = `
     <div class="usage-card">
-      <div class="usage-title">📦 Today's Ingredient Usage</div>
+      <div class="usage-title">Today's Ingredient Usage</div>
       <div class="usage-supplier">Fleisher's — Protein</div>
       <div class="usage-row"><span>${totalQty} sandwiches</span><span class="usage-cost">$${totalMeat.toFixed(2)}</span></div>
       <div class="usage-supplier">Runner & Stone — Ciabatta</div>
@@ -656,7 +656,7 @@ async function placeOrder(itemId) {
   renderUsageTracker();
   updateStats();
 
-  if(item.stock<=2&&item.stock>0){addTx(`⚠ Low stock: ${item.name} (${item.stock} left)`)}
+  if(item.stock<=2&&item.stock>0){addTx(`Low stock: ${item.name} (${item.stock} left)`)}
   if(item.stock===0){addTx(`✗ ${item.name} sold out`)}
   maybeShowEodBtn();
 
@@ -687,10 +687,10 @@ function maybeShowEodBtn() {
 
 // Weather scenarios for demand forecasting
 const WEATHER_SCENARIOS = [
-  {temp:84,desc:'Sunny & hot',icon:'☀️',adj:[{slug:'chicken-salad',bump:3},{slug:'chopped-liver',bump:2}],reason:'Light/cold sandwiches in demand'},
-  {temp:38,desc:'Cold & blustery',icon:'🌨️',adj:[{slug:'korean-bbq',bump:3},{slug:'rolled-beef',bump:2},{slug:'boudinwich',bump:2}],reason:'Hearty sandwiches for cold weather'},
-  {temp:72,desc:'Partly cloudy',icon:'⛅',adj:[],reason:'Mild weather — standard par levels'},
-  {temp:91,desc:'Heat advisory',icon:'🔥',adj:[{slug:'chicken-salad',bump:4},{slug:'chopped-liver',bump:3}],reason:'Extreme heat — heavy cold sandwich demand'},
+  {temp:84,desc:'Sunny & hot',icon:'',adj:[{slug:'chicken-salad',bump:3},{slug:'chopped-liver',bump:2}],reason:'Light/cold sandwiches in demand'},
+  {temp:38,desc:'Cold & blustery',icon:'',adj:[{slug:'korean-bbq',bump:3},{slug:'rolled-beef',bump:2},{slug:'boudinwich',bump:2}],reason:'Hearty sandwiches for cold weather'},
+  {temp:72,desc:'Partly cloudy',icon:'',adj:[],reason:'Mild weather — standard par levels'},
+  {temp:91,desc:'Heat advisory',icon:'',adj:[{slug:'chicken-salad',bump:4},{slug:'chopped-liver',bump:3}],reason:'Extreme heat — heavy cold sandwich demand'},
 ];
 
 async function runEodReorder() {
@@ -700,9 +700,9 @@ async function runEodReorder() {
 
   // ── STEP 0: Weather-based demand forecast ──
   const wx = WEATHER_SCENARIOS[Math.floor(Math.random() * WEATHER_SCENARIOS.length)];
-  addTx(`🌡️ Agent: Checking tomorrow's forecast via OpenWeather (MPP $0.003)…`);
+  addTx(`Agent: Checking tomorrow's forecast via OpenWeather (MPP $0.003)...`);
   await wait(1000);
-  addTx(`🌡️ Forecast: ${wx.temp}°F ${wx.desc} ${wx.icon} — ${wx.reason}`);
+  addTx(`Forecast: ${wx.temp}°F ${wx.desc} ${wx.icon} — ${wx.reason}`);
   AGENTS.kitchen.balance -= 0.003;
   renderWallets();
 
@@ -734,12 +734,12 @@ async function runEodReorder() {
 
   if (wx.adj.length > 0) {
     const bumpNames = wx.adj.map(a => MENU.find(m=>m.id===a.slug)?.name).filter(Boolean);
-    addTx(`🌡️ Agent adjusted par stock: ${bumpNames.join(', ')} bumped for ${wx.desc.toLowerCase()}`);
+    addTx(`Agent adjusted par stock: ${bumpNames.join(', ')} bumped for ${wx.desc.toLowerCase()}`);
   }
   await wait(800);
 
   if (reorders.length === 0) {
-    addTx('🤖 Agent: All items at par stock — no reorder needed');
+    addTx('Agent: All items at par stock — no reorder needed');
     document.getElementById('eod-btn-wrap').innerHTML = '';
     return;
   }
@@ -757,7 +757,7 @@ async function runEodReorder() {
   ordersEl.insertAdjacentHTML('beforeend', `
     <div class="reorder-card" id="rc-${rid}">
       <div class="reorder-hdr">
-        <div class="reorder-title">🤖 Agent Auto-Reorder</div>
+        <div class="reorder-title">Agent Auto-Reorder</div>
         <span class="reorder-badge" id="rc-badge" style="color:var(--blue);border-color:var(--blue)">Processing</span>
       </div>
       <div style="font-size:10px;color:var(--muted);margin-bottom:10px;font-family:'JetBrains Mono',monospace">${wx.icon} ${wx.temp}°F ${wx.desc} — ${wx.reason}</div>
@@ -778,13 +778,13 @@ async function runEodReorder() {
   // Scroll to reorder card
   scrollIntoViewSmart(document.getElementById(`rc-${rid}`));
 
-  addTx(`🤖 Agent closing day — scanning ${MENU.length} items against par stock (${PAR_STOCK}) with weather adjustments`);
+  addTx(`Agent closing day — scanning ${MENU.length} items against par stock (${PAR_STOCK}) with weather adjustments`);
   await wait(800);
 
   // Animate: Kitchen → Fleisher's
   document.getElementById('rc-d1').className = 'reorder-dot running';
   scrollIntoViewSmart(document.getElementById('rc-s1'));
-  addTx(`🤖 Agent: ${reorders.length} items below par — ordering protein from Fleisher's`);
+  addTx(`Agent: ${reorders.length} items below par — ordering protein from Fleisher's`);
   await wait(1200);
   AGENTS.kitchen.balance -= totalMeat;
   AGENTS.meat.balance += totalMeat;
@@ -796,7 +796,7 @@ async function runEodReorder() {
   // Animate: Kitchen → Runner & Stone
   document.getElementById('rc-d2').className = 'reorder-dot running';
   scrollIntoViewSmart(document.getElementById('rc-s2'));
-  addTx(`🤖 Agent: ordering ciabatta from Runner & Stone for tomorrow`);
+  addTx(`Agent: ordering ciabatta from Runner & Stone for tomorrow`);
   await wait(1000);
   AGENTS.kitchen.balance -= totalBread;
   AGENTS.bread.balance += totalBread;
@@ -817,7 +817,7 @@ async function runEodReorder() {
     <div class="agent-post-card" id="agent-post-card">
       <div class="agent-post-header">
         <div>
-          <div class="ap-title">📱 Social Media Manager</div>
+          <div class="ap-title">Social Media Manager</div>
           <div class="ap-subtitle">Agent is handling today's X post — no human needed</div>
         </div>
         <span class="ap-cost-badge" id="ap-cost-badge" style="color:var(--blue);border-color:var(--blue)">working…</span>
@@ -835,7 +835,7 @@ async function runEodReorder() {
             <div style="display:flex;align-items:center;gap:6px"><span class="tweet-name">PBC Sandwich</span><span class="tweet-handle">@PBC_Brooklyn · just now</span></div>
             <div class="tweet-body" id="ap-tweet-body" style="opacity:.3">composing…</div>
             <div class="tweet-img" id="ap-img"><div class="img-gen-bar" id="ap-img-bar" style="display:none"></div><span class="tweet-img-label" id="ap-img-label">awaiting image...</span><div class="tweet-img-overlay" id="ap-img-overlay"><span class="tweet-img-caption" id="ap-img-caption"></span></div><span class="tweet-img-badge" id="ap-img-badge" style="display:none">Stability AI via MPP · $0.035</span></div>
-            <div class="tweet-actions" id="ap-tweet-actions" style="display:none"><span>💬 —</span><span>🔁 —</span><span>❤️ —</span><span>📊 —</span></div>
+            <div class="tweet-actions" id="ap-tweet-actions" style="display:none"><span>Reply —</span><span>Repost —</span><span>Like —</span><span>Views —</span></div>
           </div>
         </div>
       </div>
@@ -847,13 +847,13 @@ async function runEodReorder() {
   `);
 
   scrollIntoViewSmart(document.getElementById('agent-post-card'));
-  addTx(`📱 Agent: Social media manager activated — analyzing today's ${stats.orders} orders`);
+  addTx(`Agent: Social media manager activated — analyzing today's ${stats.orders} orders`);
   await wait(900);
 
   // Step 1 done — analyzed sales, picked hero
   document.getElementById('ap-s1').className = 'agent-post-step done';
   document.getElementById('ap-s2').className = 'agent-post-step running';
-  addTx(`📱 Agent: Best seller "${specialName}" (${soldCount} sold) → generating hero image via Stability AI ($0.035)`);
+  addTx(`Agent: Best seller "${specialName}" (${soldCount} sold) — generating hero image via Stability AI ($0.035)`);
 
   // Show tweet shell, start image generation
   document.getElementById('ap-tweet').style.display = 'block';
@@ -886,17 +886,17 @@ async function runEodReorder() {
   document.getElementById('ap-img-caption').textContent = specialName;
   document.getElementById('ap-img-overlay').classList.add('visible');
   document.getElementById('ap-img-badge').style.display = 'block';
-  addTx(`🖼️ Hero image ready — Stability AI via MPP ($0.035)`);
+  addTx(`Hero image ready — Stability AI via MPP ($0.035)`);
   await wait(700);
 
   // Step 3 done — copy written
-  const tweetText = `Today's best seller: ${specialName} 🔥 ${soldCount} sold before lunch. Back tomorrow — come early. #ParkSlope #BrooklynEats`;
+  const tweetText = `Today's best seller: ${specialName} — ${soldCount} sold before lunch. Back tomorrow, come early. #ParkSlope #BrooklynEats`;
   const bodyEl = document.getElementById('ap-tweet-body');
   bodyEl.textContent = tweetText;
   bodyEl.style.opacity = '1';
   document.getElementById('ap-s3').className = 'agent-post-step done';
   document.getElementById('ap-s4').className = 'agent-post-step running';
-  addTx(`✍️ Agent wrote tweet copy for "${specialName}"`);
+  addTx(`Agent wrote tweet copy for "${specialName}"`);
   await wait(700);
 
   // Step 4 done — published
