@@ -279,11 +279,11 @@
       #op-txlog,
       .op-col:nth-child(3)>div[style*="border-top"]{display:none!important}
       #op-wallets{display:flex!important;gap:8px;overflow-x:auto;padding:8px 12px;-webkit-overflow-scrolling:touch}
-      #op-wallets .w{flex:0 0 160px;margin-bottom:0;padding:10px 12px}
+      #op-wallets .w{flex:0 0 150px;margin-bottom:0;padding:10px 12px}
       .w-name{font-size:10px}
       .w-bal{font-size:20px}
       .w-addr{font-size:8px}
-      .w-role{font-size:8px}
+      .w-role{display:none}
       .w-cur{font-size:7px}
 
       /* Orders — main content, full height */
@@ -330,11 +330,11 @@
       .stat-val{font-size:13px}
 
       /* Narration — bold fixed banner at top on mobile */
-      .narration{position:fixed;bottom:auto;top:0;left:0;right:0;transform:none;max-width:100%;border-radius:0;padding:10px 14px;gap:0;font-size:12px;line-height:1.4;box-shadow:0 4px 20px rgba(0,0,0,.6);border:none;border-bottom:2px solid var(--red);background:var(--ink)}
+      .narration{position:fixed;bottom:auto;top:0;left:0;right:0;transform:none;max-width:100%;border-radius:0;padding:8px 14px;gap:0;font-size:12px;line-height:1.4;box-shadow:0 4px 20px rgba(0,0,0,.6);border:none;border-bottom:2px solid var(--red);background:var(--ink);flex-direction:column;align-items:flex-start}
       .narration.visible{transform:none}
-      .narration::before{width:0;display:none}
-      .narration .n-step{font-size:9px;margin-bottom:2px;display:block;color:var(--red);font-weight:700}
-      .narration .n-text{font-size:12px;display:block;color:var(--cream)}
+      .narration::before{display:none}
+      .narration .n-step{font-size:8px;margin-bottom:3px;display:block;color:var(--red);font-weight:700;white-space:nowrap}
+      .narration .n-text{font-size:11px;display:block;color:rgba(245,240,232,.85)}
 
       /* Flow empty */
       .flow-empty{min-height:120px}
