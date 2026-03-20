@@ -130,9 +130,9 @@
     .w{border:1px solid var(--ink-border);padding:14px 16px;margin-bottom:6px;transition:all .5s;background:var(--cream);border-radius:8px}
     .w.flash-in{border-color:var(--green);background:rgba(34,197,94,.06)}
     .w.flash-out{border-color:var(--red);background:rgba(166,29,61,.04)}
-    .w-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
-    .w-name{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
-    .w-role{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+    .w-top{margin-bottom:2px}
+    .w-name{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;display:block}
+    .w-role{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;display:block;margin-top:1px}
     .w-addr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px}
     .w-bal{font-family:'Instrument Serif',serif;font-size:28px;display:inline}
     .w-cur{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.15em;margin-left:6px}
@@ -228,9 +228,7 @@
       .op-layout{grid-template-columns:1fr 1fr}
       .op-col:first-child{display:none}
       .stats-bar{gap:16px}
-      .w-top{flex-wrap:wrap}
-      .w-name{width:100%}
-      .w-role{width:100%;font-size:8px;margin-top:1px}
+      .w-role{font-size:8px}
     }
 
     /* ── Mobile ── */
