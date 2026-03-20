@@ -984,7 +984,7 @@ async function startAutoDemo() {
   narrate('The Problem', 'Every restaurant tracks inventory by hand — spreadsheets, phone calls to suppliers, manual invoices. What if an agent handled all of that?', 5000);
   await wait(5500);
 
-  narrate('Step 1 · Orders', 'Orders come in throughout the day. Watch the left column — the agent logs every sandwich sold.', 4500);
+  narrate('Step 1 · Orders', 'Orders come in throughout the day. The agent logs every sandwich sold and tracks ingredient costs automatically.', 4500);
   await wait(2000);
 
   for (let i = 0; i < demoOrders.length; i++) {
@@ -994,7 +994,7 @@ async function startAutoDemo() {
       narrate('Ingredient Tracking', 'Each order uses protein from Fleisher\'s and bread from Runner & Stone. The agent tallies both costs automatically.', 5000);
     }
     if (i === 2) {
-      narrate('Running Tally', 'Look at the "Today\'s Ingredient Usage" card — the agent knows exactly what you owe each supplier so far.', 5000);
+      narrate('Running Tally', 'The ingredient usage card updates in real time — the agent knows exactly what you owe each supplier so far.', 5000);
     }
     if (i === 4) {
       narrate('Wallet Balances', 'The kitchen wallet collects revenue from each sale. Supplier wallets are still at $0 — no payment yet.', 4500);
