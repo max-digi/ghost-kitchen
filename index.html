@@ -343,15 +343,14 @@
       <div class="hero-eyebrow">Interactive Demo</div>
       <div class="hero-title">The self-restocking restaurant</div>
       <div class="hero-scenario">
-        You run <strong>PBC</strong>, a sandwich shop in Brooklyn. Every order uses ingredients from two suppliers — <strong>Fleisher's</strong> for protein and <strong>Runner &amp; Stone</strong> for bread.
-        Today, an AI agent watches every sandwich you sell and tallies what you used.
-        At closing time, it calculates exactly what to reorder and pays both suppliers automatically — they receive USD, settled instantly in USDC on Tempo. <strong>No spreadsheets, no invoices, no phone calls.</strong>
+        You run <strong>PBC</strong>, a sandwich shop in Brooklyn. You already have a POS, maybe even auto-reordering. But your suppliers still wait 30-60 days to get paid, and every payment still runs through processors, banks, and invoicing software.
+        An AI agent watches every sandwich sold, tallies costs across two suppliers — <strong>Fleisher's</strong> and <strong>Runner &amp; Stone</strong> — and at close, pays them instantly. <strong>Settled in seconds, not months. No invoices, no accounts payable, no float.</strong>
       </div>
       <div class="hero-steps">
         <div class="hero-step"><div class="hero-step-n">01</div><div class="hero-step-label">Orders come in</div><div class="hero-step-sub">All day</div></div>
         <div class="hero-step"><div class="hero-step-n">02</div><div class="hero-step-label">Agent tracks usage</div><div class="hero-step-sub">Per ingredient</div></div>
         <div class="hero-step"><div class="hero-step-n">03</div><div class="hero-step-label">Day closes</div><div class="hero-step-sub">Agent takes over</div></div>
-        <div class="hero-step"><div class="hero-step-n">04</div><div class="hero-step-label">Pays suppliers</div><div class="hero-step-sub">They receive USD</div></div>
+        <div class="hero-step"><div class="hero-step-n">04</div><div class="hero-step-label">Pays suppliers</div><div class="hero-step-sub">Settled in seconds</div></div>
       </div>
       <div class="hero-btns">
         <button class="hero-enter" onclick="dismissHero(); startAutoDemo();">Watch the Demo</button>
@@ -941,7 +940,7 @@ async function startAutoDemo() {
   ];
 
   await wait(600);
-  narrate('The Problem', 'Every restaurant tracks inventory by hand — spreadsheets, phone calls to suppliers, manual invoices. What if an agent handled all of that?', 5000);
+  narrate('The Problem', 'Restaurants can already automate ordering. But supplier payments still take 30-60 days, run through banks, and pile up in accounts payable. What if the payment was instant?', 5000);
   await wait(5500);
 
   narrate('Step 1 · Orders', 'Orders come in throughout the day. The agent logs every sandwich sold and tracks ingredient costs automatically.', 4500);
@@ -972,7 +971,7 @@ async function startAutoDemo() {
   await runEodReorder();
 
   await wait(2000);
-  narrate('Done', 'Suppliers paid. Menu updated. Kitchen restocked with weather-smart par levels. Four MPP services, zero human involvement.', 6000);
+  narrate('Done', 'Suppliers paid in seconds — not 30 days. No invoices, no AP, no bank float. Menu restocked with weather-smart par levels. Four MPP services, instant settlement.', 6000);
 }
 
 // ═══ INIT ═══
