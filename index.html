@@ -148,7 +148,8 @@
     .stat-val{font-family:'Instrument Serif',serif;font-size:18px;color:var(--cream)}
 
     /* Right col sections */
-    .r-section{padding:12px 14px}
+    .r-section{padding:12px 14px;flex-shrink:0}
+    .r-section#op-txlog{flex:1;flex-shrink:1;min-height:0;overflow-y:auto}
     .r-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 
     /* EOD reorder */
@@ -402,7 +403,7 @@
         <div class="r-section" id="op-wallets"></div>
         <div style="border-top:1px solid var(--ink-border)"></div>
         <div class="col-hdr">Activity Log</div>
-        <div class="r-section" style="flex:1;overflow-y:auto" id="op-txlog"></div>
+        <div class="r-section" id="op-txlog"></div>
       </div>
     </div>
     <div class="stats-bar">
