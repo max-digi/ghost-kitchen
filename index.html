@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cream:#F5F0E8;--cream2:#EDE8DF;--cream3:#E5E0D6;
+      --cream:#F5F0E8;--cream2:#E8E2D8;--cream3:#DBD5CA;
       --ink:#1A1A18;--ink-light:rgba(26,26,24,.55);--ink-border:rgba(26,26,24,.08);--ink-border2:rgba(26,26,24,.15);
       --muted:#A39E93;--muted2:#C4BFB4;
       --red:#A61D3D;--green:#22c55e;--amber:#D97706;--blue:#3B82F6;--purple:#7C3AED;
@@ -37,7 +37,7 @@
     @keyframes heroFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
     /* ── Narration Toast ── */
-    .narration{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(26,26,24,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;padding:16px 28px 16px 20px;border-radius:14px;border:1px solid rgba(255,255,255,.06);box-shadow:0 12px 48px rgba(0,0,0,.5),0 0 0 1px rgba(166,29,61,.15),inset 0 1px 0 rgba(255,255,255,.05);opacity:0;transition:opacity .5s,transform .5s cubic-bezier(.16,1,.3,1);transform:translateX(-50%) translateY(12px);pointer-events:none;max-width:540px;text-align:left;line-height:1.6;display:flex;gap:16px;align-items:flex-start}
+    .narration{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(26,26,24,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;padding:16px 28px 16px 20px;border-radius:14px;border:1px solid rgba(255,255,255,.06);box-shadow:0 12px 48px rgba(0,0,0,.5),0 0 0 1px rgba(166,29,61,.15),inset 0 1px 0 rgba(255,255,255,.05);opacity:0;transition:opacity .5s,transform .5s cubic-bezier(.16,1,.3,1);transform:translateX(-50%) translateY(12px);pointer-events:none;max-width:540px;text-align:left;line-height:1.6;display:flex;gap:16px;align-items:flex-start}
     .narration.visible{opacity:1;transform:translateX(-50%) translateY(0)}
     .narration::before{content:'';flex-shrink:0;width:3px;border-radius:3px;align-self:stretch;background:linear-gradient(180deg,var(--red),rgba(166,29,61,.2));animation:narrationPulse 2s ease-in-out infinite}
     @keyframes narrationPulse{0%,100%{opacity:1}50%{opacity:.5}}
