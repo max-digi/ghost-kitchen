@@ -875,7 +875,9 @@ async function runEodReorder() {
   await wait(700);
 
   // Step 3 done — copy written
-  const tweetText = `Today's best seller: ${specialName} — ${soldCount} sold before lunch. Back tomorrow, come early. #ParkSlope #BrooklynEats`;
+  const totalSold = Object.values(usage).reduce((s,u) => s + u.count, 0);
+  const pct = totalSold > 0 ? Math.round((soldCount / totalSold) * 100) : 0;
+  const tweetText = `${soldCount} of our ${totalSold} sandwiches sold today were the ${specialName} — ${pct}% of all orders, gone by noon. Limited batch again tomorrow.`;
   const bodyEl = document.getElementById('ap-tweet-body');
   bodyEl.textContent = tweetText;
   bodyEl.style.opacity = '1';
