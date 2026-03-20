@@ -228,8 +228,9 @@
       .op-layout{grid-template-columns:1fr 1fr}
       .op-col:first-child{display:none}
       .stats-bar{gap:16px}
-      .w-top{flex-direction:column;align-items:flex-start;gap:1px}
-      .w-role{font-size:8px}
+      .w-top{flex-wrap:wrap}
+      .w-name{width:100%}
+      .w-role{width:100%;font-size:8px;margin-top:1px}
     }
 
     /* ── Mobile ── */
@@ -527,7 +528,7 @@ function renderWallets() {
   `).join('');
 }
 
-function flash(agent,type){const el=document.getElementById(`w-${agent}`);if(!el)return;el.classList.add(`flash-${type}`);setTimeout(()=>el.classList.remove(`flash-${type}`),900);paySound(type)}
+function flash(agent,type){const el=document.getElementById(`w-${agent}`);if(!el)return;el.classList.add(`flash-${type}`);setTimeout(()=>el.classList.remove(`flash-${type}`),900)}
 
 function addTx(desc,hash){
   const log=document.getElementById('op-txlog');
@@ -553,22 +554,6 @@ const wait=ms=>new Promise(r=>setTimeout(r,ms));
 function scrollIntoViewSmart(el){if(!el)return;const container=el.closest('.col-body');if(container&&container.scrollHeight>container.clientHeight){el.scrollIntoView({behavior:'smooth',block:'nearest'});}else{el.scrollIntoView({behavior:'smooth',block:'center'});}}
 function fakeHash(){const h='0123456789abcdef';let s='0x';for(let i=0;i<64;i++)s+=h[Math.floor(Math.random()*16)];return s}
 
-// ═══ PAYMENT SOUND ═══
-let audioCtx = null;
-function paySound(type) {
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    if (type === 'in') { osc.frequency.value = 880; gain.gain.value = 0.06; }
-    else if (type === 'out') { osc.frequency.value = 440; gain.gain.value = 0.04; }
-    else { osc.frequency.value = 660; gain.gain.value = 0.03; }
-    osc.type = 'sine';
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-    osc.start(); osc.stop(audioCtx.currentTime + 0.15);
-  } catch(e) {}
-}
 
 // ═══ USAGE TRACKER ═══
 function renderUsageTracker() {
