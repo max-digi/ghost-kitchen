@@ -124,15 +124,15 @@
     .usage-total .usage-cost{font-size:14px;font-family:'Instrument Serif',serif}
 
     /* Wallets */
-    .w{border:1px solid var(--ink-border);padding:14px 16px;margin-bottom:6px;transition:all .5s;background:var(--cream);border-radius:8px}
+    .w{border:1px solid var(--ink-border);padding:8px 12px;margin-bottom:4px;transition:all .5s;background:var(--cream);border-radius:6px}
     .w.flash-in{border-color:var(--green);background:rgba(34,197,94,.06)}
     .w.flash-out{border-color:var(--red);background:rgba(166,29,61,.04)}
-    .w-top{margin-bottom:2px}
-    .w-name{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;display:block}
-    .w-role{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;display:block;margin-top:1px}
-    .w-addr{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:4px}
-    .w-bal{font-family:'Instrument Serif',serif;font-size:28px;display:inline}
-    .w-cur{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.15em;margin-left:6px}
+    .w-top{margin-bottom:1px;display:flex;align-items:baseline;gap:6px}
+    .w-name{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+    .w-role{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+    .w-addr{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);margin-bottom:2px}
+    .w-bal{font-family:'Instrument Serif',serif;font-size:20px;display:inline}
+    .w-cur{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-left:4px}
 
     /* TX log */
     .tx{font-size:10px;padding:9px 12px;border:1px solid var(--ink-border);margin-bottom:4px;border-radius:6px;animation:slideIn .2s ease;background:var(--cream)}
@@ -148,7 +148,7 @@
     .stat-val{font-family:'Instrument Serif',serif;font-size:18px;color:var(--cream)}
 
     /* Right col sections */
-    .r-section{padding:12px 14px;flex-shrink:0}
+    .r-section{padding:8px 10px;flex-shrink:0}
     .r-section#op-txlog{flex:1;flex-shrink:1;min-height:0;overflow-y:auto}
     .r-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 
@@ -505,6 +505,7 @@ function addTx(desc,hash){
   const t=new Date().toLocaleTimeString('en-US',{hour12:false});
   const h=hash?`<div class="tx-hash"><a href="https://explorer.tempo.xyz/tx/${hash}" target="_blank">tx: ${hash.slice(0,10)}…${hash.slice(-6)}</a></div>`:'';
   log.insertAdjacentHTML('afterbegin',`<div class="tx"><span class="tx-time">${t}</span><div class="tx-desc">${desc}</div>${h}</div>`);
+  log.scrollTop=0;
 }
 
 function updateStats(){
